@@ -1,0 +1,14 @@
+# Godot-specific ignores
+.godot/
+*.translation
+
+# Ignore project data
+export_presets.cfg
+
+# Asset Library
+.import/
+
+# Mono-specific ignores
+.mono/
+bin/
+obj/
