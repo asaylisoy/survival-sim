@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://dx61o702i8q42"]
+[gd_scene load_steps=27 format=3 uid="uid://dx61o702i8q42"]
 
 [ext_resource type="PackedScene" uid="uid://dx6d8cq3hvo5" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/neutral/building_bridge_A.gltf" id="1_il2jm"]
 [ext_resource type="Script" uid="uid://e1liptxr06ix" path="res://camera_position.gd" id="1_wjb0r"]
+[ext_resource type="Script" uid="uid://c2r37hd3itpya" path="res://environment.gd" id="2_mc2jv"]
 [ext_resource type="PackedScene" uid="uid://coo0tvedkylk4" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/neutral/building_dirt.gltf" id="2_wjb0r"]
 [ext_resource type="PackedScene" uid="uid://yow2ydemcwim" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/base/hex_grass.gltf" id="3_mc2jv"]
 [ext_resource type="PackedScene" uid="uid://bmvs3qkdwi0xo" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/base/hex_water.gltf" id="4_bo7i5"]
@@ -24,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://d0v351dscll63" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/roads/hex_road_A.gltf" id="21_7htu6"]
 [ext_resource type="PackedScene" uid="uid://d2vokk3uyakc1" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/roads/hex_road_B.gltf" id="22_7qk3m"]
 [ext_resource type="PackedScene" uid="uid://cllqx5wpyrbt2" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/red/building_tavern_red.gltf" id="23_xpnt2"]
+[ext_resource type="Script" uid="uid://cmoa4pbxxucpd" path="res://villagers.gd" id="24_bo7i5"]
 
 [node name="world" type="Node3D"]
 
@@ -39,6 +41,9 @@ transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.7660
 [node name="Camera3D" type="Camera3D" parent="CameraPosition/CameraRotationX/CameraZoomPivot"]
 
 [node name="Environment" type="Node3D" parent="."]
+script = ExtResource("2_mc2jv")
+
+[node name="World" type="GridMap" parent="Environment"]
 
 [node name="hex_grass2" parent="Environment" instance=ExtResource("3_mc2jv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.148967, 0, -2.211969)
@@ -85,10 +90,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.209265, 0, -8.479931)
 [node name="hex_road_B2" parent="Environment" instance=ExtResource("22_7qk3m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.678682, 0, -8.31452)
 
-[node name="Buildings" type="Node3D" parent="."]
-
-[node name="building_dirt2" parent="Buildings" instance=ExtResource("2_wjb0r")]
+[node name="building_dirt2" parent="Environment" instance=ExtResource("2_wjb0r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5197134, -0.39212298, -2.0737488)
+
+[node name="Buildings" type="Node3D" parent="."]
 
 [node name="building_barracks_red2" parent="Buildings" instance=ExtResource("7_k83mh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1726456, 0.13737202, -12.856616)
@@ -106,6 +111,7 @@ transform = Transform3D(0.052701917, 0, 0.9986103, 0, 1, 0, -0.9986103, 0, 0.052
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.282729, 0.22085667, -12.662054)
 
 [node name="Villagers" type="Node3D" parent="."]
+script = ExtResource("24_bo7i5")
 
 [node name="Barbarian" parent="Villagers" instance=ExtResource("5_4h6ng")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.324077, -1.1306889, -8.522745)
