@@ -1,4 +1,4 @@
-extends Node3D
+"""extends Node3D
 
 #variables
 var home_location #gives the home building of the villager or null if the villager is homeless
@@ -14,4 +14,4 @@ func _process(delta: float) -> void:
 	if food < 20:
 		#
 	if food < 20:
-		#
+		#"""

@@ -1,4 +1,4 @@
-extends Node3D
+"""extends Node3D
 
 #world variables
 var map_width #gives the dimensions for the map
@@ -26,4 +26,4 @@ func seed_generation(seed_input: String) -> String:
 	return seed_starting
 
 func world_generation():
-	for i 
+	for i """

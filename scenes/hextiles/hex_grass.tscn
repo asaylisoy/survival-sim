@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyrsl73dppfhe"]
+
+[ext_resource type="PackedScene" uid="uid://yow2ydemcwim" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/base/hex_grass.gltf" id="1_qxoeq"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xdk6d"]
+height = 0.051330566
+radius = 1.1259766
+
+[node name="hex_grass" type="Node3D"]
+
+[node name="hex_grass2" parent="." instance=ExtResource("1_qxoeq")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.024548054, 0)
+shape = SubResource("CylinderShape3D_xdk6d")

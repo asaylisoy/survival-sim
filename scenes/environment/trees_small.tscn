@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyt0fbuebj5cc"]
+
+[ext_resource type="PackedScene" uid="uid://f3tv2b7gvcut" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_A_small.gltf" id="1_m6u1c"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c3gsv"]
+height = 1.01857
+radius = 0.6635742
+
+[node name="trees_small" type="Node3D"]
+
+[node name="trees_A_small2" parent="." instance=ExtResource("1_m6u1c")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49071503, 0)
+shape = SubResource("CylinderShape3D_c3gsv")

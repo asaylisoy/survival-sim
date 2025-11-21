@@ -1,6 +1,6 @@
-[gd_scene load_steps=27 format=3 uid="uid://dx61o702i8q42"]
+[gd_scene load_steps=25 format=3 uid="uid://dx61o702i8q42"]
 
-[ext_resource type="PackedScene" uid="uid://dx6d8cq3hvo5" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/neutral/building_bridge_A.gltf" id="1_il2jm"]
+[ext_resource type="Script" uid="uid://8xu3arfv8fjy" path="res://world_generator.gd" id="1_mc2jv"]
 [ext_resource type="Script" uid="uid://e1liptxr06ix" path="res://camera_position.gd" id="1_wjb0r"]
 [ext_resource type="Script" uid="uid://c2r37hd3itpya" path="res://environment.gd" id="2_mc2jv"]
 [ext_resource type="PackedScene" uid="uid://coo0tvedkylk4" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/neutral/building_dirt.gltf" id="2_wjb0r"]
@@ -22,12 +22,11 @@
 [ext_resource type="PackedScene" uid="uid://bi31tdasu114n" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_B_medium.gltf" id="18_ryup7"]
 [ext_resource type="PackedScene" uid="uid://bw51vbo2ib0yk" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_B_small.gltf" id="19_ytpkv"]
 [ext_resource type="PackedScene" uid="uid://bx6u8n62g3828" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_B_cut.gltf" id="20_jas3d"]
-[ext_resource type="PackedScene" uid="uid://d0v351dscll63" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/roads/hex_road_A.gltf" id="21_7htu6"]
-[ext_resource type="PackedScene" uid="uid://d2vokk3uyakc1" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/roads/hex_road_B.gltf" id="22_7qk3m"]
-[ext_resource type="PackedScene" uid="uid://cllqx5wpyrbt2" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/red/building_tavern_red.gltf" id="23_xpnt2"]
+[ext_resource type="PackedScene" uid="uid://ht0j3em0octa" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/red/building_home_B_red.gltf" id="24_4h6ng"]
 [ext_resource type="Script" uid="uid://cmoa4pbxxucpd" path="res://villagers.gd" id="24_bo7i5"]
 
-[node name="world" type="Node3D"]
+[node name="World" type="Node3D"]
+script = ExtResource("1_mc2jv")
 
 [node name="CameraPosition" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7715759, 0, 9.968315)
@@ -84,12 +83,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9421678, 0, -17.879696)
 [node name="trees_B_cut2" parent="Environment" instance=ExtResource("20_jas3d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.618487, 0, -18.654875)
 
-[node name="hex_road_A2" parent="Environment" instance=ExtResource("21_7htu6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.209265, 0, -8.479931)
-
-[node name="hex_road_B2" parent="Environment" instance=ExtResource("22_7qk3m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.678682, 0, -8.31452)
-
 [node name="building_dirt2" parent="Environment" instance=ExtResource("2_wjb0r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5197134, -0.39212298, -2.0737488)
 
@@ -104,12 +97,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3872175, 0, -12.993258)
 [node name="building_castle_red2" parent="Buildings" instance=ExtResource("9_bh8nc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3126068, 0, -12.966834)
 
-[node name="building_bridge_A2" parent="Buildings" instance=ExtResource("1_il2jm")]
-transform = Transform3D(0.052701917, 0, 0.9986103, 0, 1, 0, -0.9986103, 0, 0.052701917, -9.158201, 0.14101744, -2.0580266)
-
-[node name="building_tavern_red2" parent="Buildings" instance=ExtResource("23_xpnt2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.282729, 0.22085667, -12.662054)
-
 [node name="Villagers" type="Node3D" parent="."]
 script = ExtResource("24_bo7i5")
 
@@ -122,3 +109,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2669435, -1.1323597, -7.82
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, -15.825035, 53.562553, -8.6625595)
 shadow_enabled = true
+
+[node name="building_home_B_red2" parent="." instance=ExtResource("24_4h6ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.350756, 0.11872059, -12.887704)

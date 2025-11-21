@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1yeqb7regnii"]
+
+[ext_resource type="PackedScene" uid="uid://lsadt78ga06e" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/red/building_blacksmith_red.gltf" id="1_01ff7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2y5re"]
+size = Vector3(1.1851196, 0.96762085, 1.0780029)
+
+[node name="blacksmith" type="Node3D"]
+
+[node name="building_blacksmith_red2" parent="." instance=ExtResource("1_01ff7")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.004547119, 0.4804535, 0.0018920898)
+shape = SubResource("BoxShape3D_2y5re")

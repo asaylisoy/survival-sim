@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy1cmuby0udvh"]
+
+[ext_resource type="PackedScene" uid="uid://bbjfl2ynlm4c2" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_A_cut.gltf" id="1_n8iu4"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mrx0i"]
+height = 0.20594788
+radius = 0.8774414
+
+[node name="trees_cut" type="Node3D"]
+
+[node name="trees_A_cut2" parent="." instance=ExtResource("1_n8iu4")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08782196, 0)
+shape = SubResource("CylinderShape3D_mrx0i")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkjdlf4srs47c"]
+
+[ext_resource type="PackedScene" uid="uid://8xmtacnkvgqw" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/red/building_castle_red.gltf" id="1_0538a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j450f"]
+size = Vector3(1.7236023, 3.710312, 1.9951324)
+
+[node name="CastleMain" type="Node3D"]
+
+[node name="building_castle_red2" parent="." instance=ExtResource("1_0538a")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0015716553, 1.8550949, -0.042396545)
+shape = SubResource("BoxShape3D_j450f")
