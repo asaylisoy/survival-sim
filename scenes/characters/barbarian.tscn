@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dr0ji5yrnm3xb"]
+
+[ext_resource type="PackedScene" uid="uid://bwqs83cjhruf4" path="res://Source/KayKit_Adventurers_2.0_FREE/Characters/gltf/Barbarian.glb" id="1_wuqwy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6gmck"]
+height = 2.4041748
+
+[node name="barbarian" type="Node3D"]
+
+[node name="Barbarian" parent="." instance=ExtResource("1_wuqwy")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1997681, 0)
+shape = SubResource("CapsuleShape3D_6gmck")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cr5y4jptgcc6d"]
+
+[ext_resource type="PackedScene" uid="uid://boaixw8lj0mch" path="res://Source/KayKit_Adventurers_2.0_FREE/Characters/gltf/Knight.glb" id="1_nxpse"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gapps"]
+height = 2.4598389
+
+[node name="knight" type="Node3D"]
+
+[node name="Knight" parent="." instance=ExtResource("1_nxpse")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2144165, 0)
+shape = SubResource("CapsuleShape3D_gapps")

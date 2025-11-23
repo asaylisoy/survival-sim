@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://crfrrjt17rdb6"]
+
+[ext_resource type="PackedScene" uid="uid://dk4vsw0vqni68" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/mountain_C.gltf" id="1_jye56"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ci1l1"]
+height = 1.4377441
+radius = 1.0092773
+
+[node name="mountainC" type="Node3D"]
+
+[node name="mountain_C2" parent="." instance=ExtResource("1_jye56")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71765137, 0)
+shape = SubResource("CylinderShape3D_ci1l1")

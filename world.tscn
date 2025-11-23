@@ -1,32 +1,15 @@
-[gd_scene load_steps=25 format=3 uid="uid://dx61o702i8q42"]
+[gd_scene load_steps=5 format=3 uid="uid://dx61o702i8q42"]
 
 [ext_resource type="Script" uid="uid://8xu3arfv8fjy" path="res://world_generator.gd" id="1_mc2jv"]
 [ext_resource type="Script" uid="uid://e1liptxr06ix" path="res://camera_position.gd" id="1_wjb0r"]
 [ext_resource type="Script" uid="uid://c2r37hd3itpya" path="res://environment.gd" id="2_mc2jv"]
-[ext_resource type="PackedScene" uid="uid://coo0tvedkylk4" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/neutral/building_dirt.gltf" id="2_wjb0r"]
-[ext_resource type="PackedScene" uid="uid://yow2ydemcwim" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/base/hex_grass.gltf" id="3_mc2jv"]
-[ext_resource type="PackedScene" uid="uid://bmvs3qkdwi0xo" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/base/hex_water.gltf" id="4_bo7i5"]
-[ext_resource type="PackedScene" uid="uid://bwqs83cjhruf4" path="res://Source/KayKit_Adventurers_2.0_FREE/Characters/gltf/Barbarian.glb" id="5_4h6ng"]
-[ext_resource type="PackedScene" uid="uid://boaixw8lj0mch" path="res://Source/KayKit_Adventurers_2.0_FREE/Characters/gltf/Knight.glb" id="6_o3ebs"]
-[ext_resource type="PackedScene" uid="uid://21vuwhn40vhd" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/red/building_barracks_red.gltf" id="7_k83mh"]
-[ext_resource type="PackedScene" uid="uid://lsadt78ga06e" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/red/building_blacksmith_red.gltf" id="8_qktwf"]
-[ext_resource type="PackedScene" uid="uid://8xmtacnkvgqw" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/red/building_castle_red.gltf" id="9_bh8nc"]
-[ext_resource type="PackedScene" uid="uid://hhx5wpkk3o11" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/mountain_B.gltf" id="10_jjr1n"]
-[ext_resource type="PackedScene" uid="uid://cocr0pi07v5jv" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/mountain_A.gltf" id="11_gggvi"]
-[ext_resource type="PackedScene" uid="uid://dk4vsw0vqni68" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/mountain_C.gltf" id="12_w44yn"]
-[ext_resource type="PackedScene" uid="uid://bbjfl2ynlm4c2" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_A_cut.gltf" id="13_6ah6f"]
-[ext_resource type="PackedScene" uid="uid://caoyfq43osugj" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_A_large.gltf" id="14_g1i3r"]
-[ext_resource type="PackedScene" uid="uid://b6s08ttv8eswo" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_A_medium.gltf" id="15_my276"]
-[ext_resource type="PackedScene" uid="uid://f3tv2b7gvcut" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_A_small.gltf" id="16_yx0jh"]
-[ext_resource type="PackedScene" uid="uid://ylpubskclnbu" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_B_large.gltf" id="17_1ew0l"]
-[ext_resource type="PackedScene" uid="uid://bi31tdasu114n" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_B_medium.gltf" id="18_ryup7"]
-[ext_resource type="PackedScene" uid="uid://bw51vbo2ib0yk" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_B_small.gltf" id="19_ytpkv"]
-[ext_resource type="PackedScene" uid="uid://bx6u8n62g3828" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_B_cut.gltf" id="20_jas3d"]
-[ext_resource type="PackedScene" uid="uid://ht0j3em0octa" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/red/building_home_B_red.gltf" id="24_4h6ng"]
 [ext_resource type="Script" uid="uid://cmoa4pbxxucpd" path="res://villagers.gd" id="24_bo7i5"]
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_mc2jv")
+world_radius = null
+hex_size = null
+height_multiplier = null
 
 [node name="CameraPosition" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7715759, 0, 9.968315)
@@ -44,71 +27,11 @@ script = ExtResource("2_mc2jv")
 
 [node name="World" type="GridMap" parent="Environment"]
 
-[node name="hex_grass2" parent="Environment" instance=ExtResource("3_mc2jv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.148967, 0, -2.211969)
-
-[node name="hex_water2" parent="Environment" instance=ExtResource("4_bo7i5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.746085, 0, -2.2248468)
-
-[node name="mountain_B2" parent="Environment" instance=ExtResource("10_jjr1n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6174607, 0, -12.662884)
-
-[node name="mountain_A2" parent="Environment" instance=ExtResource("11_gggvi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.673263, 0, -12.655171)
-
-[node name="mountain_C2" parent="Environment" instance=ExtResource("12_w44yn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3903294, 0, -11.978489)
-
-[node name="trees_A_cut2" parent="Environment" instance=ExtResource("13_6ah6f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.138048, 0, -15.697264)
-
-[node name="trees_A_large2" parent="Environment" instance=ExtResource("14_g1i3r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6299095, 0, -16.41007)
-
-[node name="trees_A_medium2" parent="Environment" instance=ExtResource("15_my276")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3827367, 0, -16.418846)
-
-[node name="trees_A_small2" parent="Environment" instance=ExtResource("16_yx0jh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0179198, -4.7683716e-07, -15.939315)
-
-[node name="trees_B_large2" parent="Environment" instance=ExtResource("17_1ew0l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.784434, 0, -19.012697)
-
-[node name="trees_B_medium2" parent="Environment" instance=ExtResource("18_ryup7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3949122, 0, -18.528349)
-
-[node name="trees_B_small2" parent="Environment" instance=ExtResource("19_ytpkv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9421678, 0, -17.879696)
-
-[node name="trees_B_cut2" parent="Environment" instance=ExtResource("20_jas3d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.618487, 0, -18.654875)
-
-[node name="building_dirt2" parent="Environment" instance=ExtResource("2_wjb0r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5197134, -0.39212298, -2.0737488)
-
 [node name="Buildings" type="Node3D" parent="."]
-
-[node name="building_barracks_red2" parent="Buildings" instance=ExtResource("7_k83mh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1726456, 0.13737202, -12.856616)
-
-[node name="building_blacksmith_red2" parent="Buildings" instance=ExtResource("8_qktwf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3872175, 0, -12.993258)
-
-[node name="building_castle_red2" parent="Buildings" instance=ExtResource("9_bh8nc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3126068, 0, -12.966834)
 
 [node name="Villagers" type="Node3D" parent="."]
 script = ExtResource("24_bo7i5")
 
-[node name="Barbarian" parent="Villagers" instance=ExtResource("5_4h6ng")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.324077, -1.1306889, -8.522745)
-
-[node name="Knight" parent="Villagers" instance=ExtResource("6_o3ebs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2669435, -1.1323597, -7.827672)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, -15.825035, 53.562553, -8.6625595)
 shadow_enabled = true
-
-[node name="building_home_B_red2" parent="." instance=ExtResource("24_4h6ng")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.350756, 0.11872059, -12.887704)
