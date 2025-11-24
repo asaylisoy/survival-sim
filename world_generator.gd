@@ -65,9 +65,9 @@ const HEX_DIRECTIONS = [
 	Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)
 ]
 
-#func get_hex_area(center, radius):#TODO
+func get_hex_area(center, radius):#TODO
 
-#func get_neighbors(center):
+func get_neighbors(center):
 	
 
 func place_fixed_structures():

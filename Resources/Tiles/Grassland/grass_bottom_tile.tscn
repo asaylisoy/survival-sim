@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://d4d8ii0j8w6fj"]
-
-[ext_resource type="PackedScene" uid="uid://b2d7267eixyn4" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/base/hex_grass_bottom.gltf" id="1_fkkic"]
-
-[node name="grass_bottom_tile" instance=ExtResource("1_fkkic")]
