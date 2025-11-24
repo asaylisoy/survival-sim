@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4wkd5o1br40c"]
+
+[ext_resource type="PackedScene" uid="uid://d3a2wnc8jxlhy" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/coast/hex_coast_B.gltf" id="1_4kvuv"]
+
+[node name="coast_b_tile" instance=ExtResource("1_4kvuv")]

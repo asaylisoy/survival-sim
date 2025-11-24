@@ -1,15 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://dx61o702i8q42"]
+[gd_scene load_steps=7 format=3 uid="uid://dx61o702i8q42"]
 
-[ext_resource type="Script" uid="uid://8xu3arfv8fjy" path="res://world_generator.gd" id="1_mc2jv"]
+[ext_resource type="Script" uid="uid://8xu3arfv8fjy" path="res://world_generator.gd" id="1_dwbse"]
 [ext_resource type="Script" uid="uid://e1liptxr06ix" path="res://camera_position.gd" id="1_wjb0r"]
-[ext_resource type="Script" uid="uid://c2r37hd3itpya" path="res://environment.gd" id="2_mc2jv"]
+[ext_resource type="Script" uid="uid://dfhpmm4lcb5kw" path="res://world_gen.gd" id="3_036b0"]
+[ext_resource type="MeshLibrary" uid="uid://cjn5vlvwhqvu3" path="res://Resources/Tiles/mesh_library.tres" id="3_dwbse"]
+[ext_resource type="Script" uid="uid://db4j6tuov61lc" path="res://grid_map.gd" id="4_dwbse"]
 [ext_resource type="Script" uid="uid://cmoa4pbxxucpd" path="res://villagers.gd" id="24_bo7i5"]
 
 [node name="World" type="Node3D"]
-script = ExtResource("1_mc2jv")
-world_radius = null
-hex_size = null
-height_multiplier = null
+script = ExtResource("1_dwbse")
 
 [node name="CameraPosition" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7715759, 0, 9.968315)
@@ -22,10 +21,16 @@ transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.7660
 
 [node name="Camera3D" type="Camera3D" parent="CameraPosition/CameraRotationX/CameraZoomPivot"]
 
-[node name="Environment" type="Node3D" parent="."]
-script = ExtResource("2_mc2jv")
+[node name="WorldGenerator" type="Node3D" parent="."]
+script = ExtResource("3_036b0")
 
-[node name="World" type="GridMap" parent="Environment"]
+[node name="GridMap" type="GridMap" parent="WorldGenerator"]
+mesh_library = ExtResource("3_dwbse")
+cell_size = Vector3(0.001, 0.001, 0.001)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+script = ExtResource("4_dwbse")
 
 [node name="Buildings" type="Node3D" parent="."]
 

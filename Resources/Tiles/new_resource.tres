@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="TileMeshData" load_steps=2 format=3 uid="uid://dwqoiy5thola5"]
+
+[ext_resource type="Script" uid="uid://cenugyowqo6ce" path="res://tile_mesh_data.gd" id="1_lro3c"]
+
+[resource]
+script = ExtResource("1_lro3c")
+metadata/_custom_type_script = "uid://cenugyowqo6ce"

@@ -1,0 +1,127 @@
+[gd_scene load_steps=40 format=3 uid="uid://b5j6kwmgjkv33"]
+
+[ext_resource type="PackedScene" uid="uid://d4d8ii0j8w6fj" path="res://Resources/Tiles/Grassland/grass_bottom_tile.tscn" id="1_5oh1c"]
+[ext_resource type="PackedScene" uid="uid://dago1s8qbs2gx" path="res://Resources/Tiles/Grassland/grass_tile.tscn" id="1_t7hg2"]
+[ext_resource type="PackedScene" uid="uid://b7fx25wkkhllv" path="res://Resources/Tiles/Grassland/grass_sloped_high_tile.tscn" id="2_gj684"]
+[ext_resource type="PackedScene" uid="uid://cegcfrxyaj2m0" path="res://Resources/Tiles/Grassland/grass_sloped_low_tile.tscn" id="3_cqh55"]
+[ext_resource type="PackedScene" uid="uid://q5l2lqrgc0qw" path="res://Resources/Tiles/Road/river_a_crossing_a_tile.tscn" id="5_bbuya"]
+[ext_resource type="PackedScene" uid="uid://4ge1uov4tj4m" path="res://Resources/Tiles/Road/river_a_crossing_b_tile.tscn" id="6_c5sm0"]
+[ext_resource type="PackedScene" uid="uid://0bverr82jagg" path="res://Resources/Tiles/Road/road_a_sloped_high_tile.tscn" id="7_v34m6"]
+[ext_resource type="PackedScene" uid="uid://baqjyrecsfl60" path="res://Resources/Tiles/Road/road_a_sloped_low_tile.tscn" id="8_rejla"]
+[ext_resource type="PackedScene" uid="uid://be8hlbou5wkkl" path="res://Resources/Tiles/Road/road_a_tile.tscn" id="9_gxecx"]
+[ext_resource type="PackedScene" uid="uid://chslklpedywpo" path="res://Resources/Tiles/Road/road_b_tile.tscn" id="10_752b6"]
+[ext_resource type="PackedScene" uid="uid://dlo4m6m4vrug1" path="res://Resources/Tiles/Road/road_c_tile.tscn" id="11_67bm6"]
+[ext_resource type="PackedScene" uid="uid://w7cgcqvdpg08" path="res://Resources/Tiles/Road/road_d_tile.tscn" id="12_jfm15"]
+[ext_resource type="PackedScene" uid="uid://dmx3ij8mrlqi" path="res://Resources/Tiles/Road/road_e_tile.tscn" id="13_iitsp"]
+[ext_resource type="PackedScene" uid="uid://cv3jrh0gchw2i" path="res://Resources/Tiles/Road/road_f_tile.tscn" id="14_fup28"]
+[ext_resource type="PackedScene" uid="uid://cu1sbc3llm081" path="res://Resources/Tiles/Road/road_g_tile.tscn" id="15_ibk3c"]
+[ext_resource type="PackedScene" uid="uid://v72h2uvaqd3v" path="res://Resources/Tiles/Road/road_h_tile.tscn" id="16_0r4cy"]
+[ext_resource type="PackedScene" uid="uid://bk3jkgx2e3d3n" path="res://Resources/Tiles/Road/road_i_tile.tscn" id="17_fo4rm"]
+[ext_resource type="PackedScene" uid="uid://hjws1slvueuk" path="res://Resources/Tiles/Road/road_j_tile.tscn" id="18_mlvjv"]
+[ext_resource type="PackedScene" uid="uid://chwydgv5dhb06" path="res://Resources/Tiles/Road/road_k_tile.tscn" id="19_wu646"]
+[ext_resource type="PackedScene" uid="uid://kypbr32qn0kt" path="res://Resources/Tiles/Road/road_l_tile.tscn" id="20_vgxla"]
+[ext_resource type="PackedScene" uid="uid://dawvodfn5frc" path="res://Resources/Tiles/Road/road_m_tile.tscn" id="21_qrir8"]
+[ext_resource type="PackedScene" uid="uid://bw2cocfaa5380" path="res://Resources/Tiles/Water/coast_a_tile.tscn" id="22_tk6v4"]
+[ext_resource type="PackedScene" uid="uid://c4wkd5o1br40c" path="res://Resources/Tiles/Water/coast_b_tile.tscn" id="23_0mi8g"]
+[ext_resource type="PackedScene" uid="uid://7bcm6v8aoe0a" path="res://Resources/Tiles/Water/coast_c_tile.tscn" id="24_8tjqk"]
+[ext_resource type="PackedScene" uid="uid://i8eeyu5dsba" path="res://Resources/Tiles/Water/coast_d_tile.tscn" id="25_yno6w"]
+[ext_resource type="PackedScene" uid="uid://etvdvbbmshj5" path="res://Resources/Tiles/Water/coast_e_tile.tscn" id="26_tvxej"]
+[ext_resource type="PackedScene" uid="uid://cdpx35ka76lel" path="res://Resources/Tiles/Water/river_a_tile.tscn" id="27_swnas"]
+[ext_resource type="PackedScene" uid="uid://bim1aihyxkde1" path="res://Resources/Tiles/Water/river_b_tile.tscn" id="28_flrr8"]
+[ext_resource type="PackedScene" uid="uid://bn6egojqlk3r5" path="res://Resources/Tiles/Water/river_c_tile.tscn" id="29_i7y54"]
+[ext_resource type="PackedScene" uid="uid://wflo37sk8c5a" path="res://Resources/Tiles/Water/river_d_tile.tscn" id="30_dttl0"]
+[ext_resource type="PackedScene" uid="uid://3m4o3saulu8l" path="res://Resources/Tiles/Water/river_e_tile.tscn" id="31_u2tvc"]
+[ext_resource type="PackedScene" uid="uid://y47tnsrmuy75" path="res://Resources/Tiles/Water/river_f_tile.tscn" id="32_sco37"]
+[ext_resource type="PackedScene" uid="uid://dbs3jypy2uaux" path="res://Resources/Tiles/Water/river_g_tile.tscn" id="33_dottw"]
+[ext_resource type="PackedScene" uid="uid://cpki7o57xehpc" path="res://Resources/Tiles/Water/river_h_tile.tscn" id="34_m00ol"]
+[ext_resource type="PackedScene" uid="uid://bqlwvxdn4uae3" path="res://Resources/Tiles/Water/river_i_tile.tscn" id="35_f5s7r"]
+[ext_resource type="PackedScene" uid="uid://b0l1x2ew1wvm" path="res://Resources/Tiles/Water/river_j_tile.tscn" id="36_khqqf"]
+[ext_resource type="PackedScene" uid="uid://b5enwttvft08t" path="res://Resources/Tiles/Water/river_k_tile.tscn" id="37_3xykw"]
+[ext_resource type="PackedScene" uid="uid://dx7m05ew680xk" path="res://Resources/Tiles/Water/river_l_tile.tscn" id="38_sdnpv"]
+[ext_resource type="PackedScene" uid="uid://y328yca4e5il" path="res://Resources/Tiles/Water/water_tile.tscn" id="39_cliyx"]
+
+[node name="mesh_library" type="Node3D"]
+
+[node name="grassland" type="Node3D" parent="."]
+
+[node name="grass_bottom_tile" parent="grassland" instance=ExtResource("1_5oh1c")]
+
+[node name="grass_sloped_high_tile" parent="grassland" instance=ExtResource("2_gj684")]
+
+[node name="grass_sloped_low_tile" parent="grassland" instance=ExtResource("3_cqh55")]
+
+[node name="grass_tile" parent="grassland" instance=ExtResource("1_t7hg2")]
+
+[node name="road" type="Node3D" parent="."]
+
+[node name="river_a_crossing_a_tile" parent="road" instance=ExtResource("5_bbuya")]
+
+[node name="river_a_crossing_b_tile" parent="road" instance=ExtResource("6_c5sm0")]
+
+[node name="road_a_sloped_high_tile" parent="road" instance=ExtResource("7_v34m6")]
+
+[node name="road_a_sloped_low_tile" parent="road" instance=ExtResource("8_rejla")]
+
+[node name="road_a_tile" parent="road" instance=ExtResource("9_gxecx")]
+
+[node name="road_b_tile" parent="road" instance=ExtResource("10_752b6")]
+
+[node name="road_c_tile" parent="road" instance=ExtResource("11_67bm6")]
+
+[node name="road_d_tile" parent="road" instance=ExtResource("12_jfm15")]
+
+[node name="road_e_tile" parent="road" instance=ExtResource("13_iitsp")]
+
+[node name="road_f_tile" parent="road" instance=ExtResource("14_fup28")]
+
+[node name="road_g_tile" parent="road" instance=ExtResource("15_ibk3c")]
+
+[node name="road_h_tile" parent="road" instance=ExtResource("16_0r4cy")]
+
+[node name="road_i_tile" parent="road" instance=ExtResource("17_fo4rm")]
+
+[node name="road_j_tile" parent="road" instance=ExtResource("18_mlvjv")]
+
+[node name="road_k_tile" parent="road" instance=ExtResource("19_wu646")]
+
+[node name="road_l_tile" parent="road" instance=ExtResource("20_vgxla")]
+
+[node name="road_m_tile" parent="road" instance=ExtResource("21_qrir8")]
+
+[node name="Water" type="Node3D" parent="."]
+
+[node name="coast_a_tile" parent="Water" instance=ExtResource("22_tk6v4")]
+
+[node name="coast_b_tile" parent="Water" instance=ExtResource("23_0mi8g")]
+
+[node name="coast_c_tile" parent="Water" instance=ExtResource("24_8tjqk")]
+
+[node name="coast_d_tile" parent="Water" instance=ExtResource("25_yno6w")]
+
+[node name="coast_e_tile" parent="Water" instance=ExtResource("26_tvxej")]
+
+[node name="river_a_tile" parent="Water" instance=ExtResource("27_swnas")]
+
+[node name="river_b_tile" parent="Water" instance=ExtResource("28_flrr8")]
+
+[node name="river_c_tile" parent="Water" instance=ExtResource("29_i7y54")]
+
+[node name="river_d_tile" parent="Water" instance=ExtResource("30_dttl0")]
+
+[node name="river_e_tile" parent="Water" instance=ExtResource("31_u2tvc")]
+
+[node name="river_f_tile" parent="Water" instance=ExtResource("32_sco37")]
+
+[node name="river_g_tile" parent="Water" instance=ExtResource("33_dottw")]
+
+[node name="river_h_tile" parent="Water" instance=ExtResource("34_m00ol")]
+
+[node name="river_i_tile" parent="Water" instance=ExtResource("35_f5s7r")]
+
+[node name="river_j_tile" parent="Water" instance=ExtResource("36_khqqf")]
+
+[node name="river_k_tile" parent="Water" instance=ExtResource("37_3xykw")]
+
+[node name="river_l_tile" parent="Water" instance=ExtResource("38_sdnpv")]
+
+[node name="water_tile" parent="Water" instance=ExtResource("39_cliyx")]

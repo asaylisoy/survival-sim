@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqlwvxdn4uae3"]
+
+[ext_resource type="PackedScene" uid="uid://d8w8x4tnj7le" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/rivers/hex_river_I.gltf" id="1_f7wxk"]
+
+[node name="river_i_tile" instance=ExtResource("1_f7wxk")]
