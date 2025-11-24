@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cegcfrxyaj2m0"]
-
-[ext_resource type="PackedScene" uid="uid://ogw6p77ex8ii" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/base/hex_grass_sloped_low.gltf" id="1_267fs"]
-
-[node name="grass_sloped_low_tile" instance=ExtResource("1_267fs")]

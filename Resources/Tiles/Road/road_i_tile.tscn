@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bk3jkgx2e3d3n"]
-
-[ext_resource type="PackedScene" uid="uid://c4ymlpw8mje0p" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/roads/hex_road_I.gltf" id="1_3prme"]
-
-[node name="road_i_tile" instance=ExtResource("1_3prme")]
