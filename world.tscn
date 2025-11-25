@@ -1,15 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://dx61o702i8q42"]
+[gd_scene load_steps=4 format=3 uid="uid://dx61o702i8q42"]
 
 [ext_resource type="Script" uid="uid://8xu3arfv8fjy" path="res://world_generator.gd" id="1_mc2jv"]
 [ext_resource type="Script" uid="uid://e1liptxr06ix" path="res://camera_position.gd" id="1_wjb0r"]
-[ext_resource type="Script" uid="uid://c2r37hd3itpya" path="res://environment.gd" id="2_mc2jv"]
-[ext_resource type="Script" uid="uid://cmoa4pbxxucpd" path="res://villagers.gd" id="24_bo7i5"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fj7yv"]
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_mc2jv")
-world_radius = null
-hex_size = null
-height_multiplier = null
+noise = SubResource("FastNoiseLite_fj7yv")
 
 [node name="CameraPosition" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7715759, 0, 9.968315)
@@ -23,14 +21,12 @@ transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.7660
 [node name="Camera3D" type="Camera3D" parent="CameraPosition/CameraRotationX/CameraZoomPivot"]
 
 [node name="Environment" type="Node3D" parent="."]
-script = ExtResource("2_mc2jv")
 
 [node name="World" type="GridMap" parent="Environment"]
 
 [node name="Buildings" type="Node3D" parent="."]
 
 [node name="Villagers" type="Node3D" parent="."]
-script = ExtResource("24_bo7i5")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, -15.825035, 53.562553, -8.6625595)
