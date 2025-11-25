@@ -9,39 +9,7 @@ extends Node3D
 #yükseklik haritasi ayarlari -bunlar ayni kaliyor- 
 @export var noise: FastNoiseLite
 @export var height_multiplier: float = 15.0
-#üretilen veriyi saklama -bu da ayni kaliyor- 
-#sadece icindeki anahtarlar artik (x,z) degil, (q,r) olacak
-var height_data = {}
-var main_base_location: Vector2i
 
-func _ready():
-	generate_world_data()
-	#...diger fonksiyonlar daha eklenecek
-	print("altigen dünya veri haritasi olusturuldu.")
-	
-	place_fixed_structures()#TODO
-	
-	build_the_world()#TODO
-	
-	print("Altigen dünya olusturma tamamlandi")
-	
-func generate_world_data():
-	print("yükseklik verisi üretiliyor...")
-	#q ve r icin, merkezden yaricap kadar her yöne giden döngüler
-	for q in range(-world_radius, world_radius + 1):
-		for r in range(-world_radius, world_radius + 1):
-			#axial koordinatlarin bir kurali vardir: q + r + s = 0
-			#haritanin altigen seklinde olmasini saglamak icin bu kurali kontrol ederiz
-			var s = - q - r
-			#abs() fonksiyonu bir sayinin mutlak degerini hesaplar (isaretsiz büyüklügünü)
-			if abs(q) <= world_radius and abs(r) <= world_radius and abs(s) <= world_radius:
-				#noise a artik q ve r adresini veriyoruz
-				var noise_value = noise.get_noise_2d(q, r)
-				var current_height = noise_value * height_multiplier
-				#veriyi (q, r) adresiyle kaydediyoruz
-				var grid_pos = Vector2i(q, r)
-				height_data[grid_pos] = current_height
-				
 
 # ---SAHNE KÜTÜPHANESI (PRELOADS)---
 
@@ -71,6 +39,57 @@ const HEX_DIRECTIONS = [
 	Vector2i(1, 0), Vector2i(1, -1), Vector2i(0, -1),
 	Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(0, 1)
 ]
+
+
+# YERLEŞTİRİLECEK ÖNEMLİ BİNALARIN LİSTESİ
+const IMPORTANT_BUILDINGS = [
+	MAIN_CASTLE_SCENE,
+	STOREHOUSE_SCENE,
+	BLACKSMITH_SCENE,
+	SMALL_HOUSE_SCENE
+]
+
+#üretilen veriyi saklama -bu da ayni kaliyor- 
+#sadece icindeki anahtarlar artik (x,z) degil, (q,r) olacak
+var height_data = {}
+#a dictionary for all of the four buildings to place
+#var main_base_location: Vector2i
+#var storehouse_location: Vector2i
+#var home_location: Vector2i
+#var blacksmith_location: Vector2i
+#DICTIONARY -> KEEPS KEY-VALUE TUPLES
+var building_locations = {}
+#ARRAY
+var occupied_hexes = []
+
+func _ready():
+	generate_world_data()
+	#...diger fonksiyonlar daha eklenecek
+	print("altigen dünya veri haritasi olusturuldu.")
+	
+	place_fixed_structures()#TODO
+	
+	build_the_world()#TODO
+	
+	print("Altigen dünya olusturma tamamlandi")
+	
+func generate_world_data():
+	print("yükseklik verisi üretiliyor...")
+	#q ve r icin, merkezden yaricap kadar her yöne giden döngüler
+	for q in range(-world_radius, world_radius + 1):
+		for r in range(-world_radius, world_radius + 1):
+			#axial koordinatlarin bir kurali vardir: q + r + s = 0
+			#haritanin altigen seklinde olmasini saglamak icin bu kurali kontrol ederiz
+			var s = - q - r
+			#abs() fonksiyonu bir sayinin mutlak degerini hesaplar (isaretsiz büyüklügünü)
+			if abs(q) <= world_radius and abs(r) <= world_radius and abs(s) <= world_radius:
+				#noise a artik q ve r adresini veriyoruz
+				var noise_value = noise.get_noise_2d(q, r)
+				var current_height = noise_value * height_multiplier
+				#veriyi (q, r) adresiyle kaydediyoruz
+				var grid_pos = Vector2i(q, r)
+				height_data[grid_pos] = current_height
+				
 
 func get_distance(hexA: Vector3i, hexB: Vector3i) -> int:
 	var hexA_q = hexA.x
@@ -120,7 +139,7 @@ func place_fixed_structures():
 	#1. ADIM ÜS KURMAYA UYGUN YERLERI BUL
 	var suitable_locations = []
 	var min_height = 3
-	var max_height = 10
+	var max_height = 9
 	
 	#bütün olusturulmus petek adreslerini gez
 	for grid_pos in height_data.keys():
@@ -129,15 +148,33 @@ func place_fixed_structures():
 		#yükseklik kriterlerimize uyuyor mu
 		if height >= min_height and height <= max_height:
 			suitable_locations.append(grid_pos)#uyuyorsa bu adresi listeye ekle
-			
-	#2. ADIM UYGUN YERLERDEN BIRINI RASTGELE SEC
+	
+	for scene_to_build in IMPORTANT_BUILDINGS:
+		if suitable_locations.is_empty():
+			print("Warning: There is no place for more buildings...")
+			################TODO################
+			#herhangi bir binadan en azindan bir tane olmali, eksik kalmamali
+			break
+		var random_pos = suitable_locations.pick_random()
+		building_locations[scene_to_build] = random_pos
+		suitable_locations.erase(random_pos)
+		
+		var height_at_pos = height_data[random_pos]
+		var flatten_radius = 1
+		var area_to_flatten = get_hex_area(random_pos, flatten_radius)
+		
+		for hex_pos in area_to_flatten:
+			if height_data.has(hex_pos):
+				height_data[hex_pos] = height_at_pos
+				occupied_hexes.append(hex_pos)
+	
+	"""#2. ADIM UYGUN YERLERDEN BIRINI RASTGELE SEC
 	var base_grid_pos: Vector2i
 	if not suitable_locations.is_empty():
 		#eger en az bir uygun yer bulunduysa onlardan birini rastgele sec
 		base_grid_pos = suitable_locations.pick_random()
-		
-		##################################
 		main_base_location = base_grid_pos
+		suitable_locations.erase(base_grid_pos)
 	else:
 		#hic uygun yer bulunmadiysa merkezi sec ve uyari ver
 		print("UYARI: Üs kurmaya uygun yer bulunamadi, base merkeze kuruldu!")
@@ -151,20 +188,36 @@ func place_fixed_structures():
 	
 	for hex_pos in area_to_flatten:
 		if height_data.has(hex_pos):
-			height_data[hex_pos] = height_at_base
+			height_data[hex_pos] = height_at_base"""
 	
 	
 #param scene is the scene that will be initiated such as buildings, tiles...
 #param grid_pos is the position 
-func place_hex_tile(scene, grid_pos: Vector2i, height: float):
-	if height_data.has(grid_pos):
-		var q = grid_pos.x
-		var r = grid_pos.y
-		height = height_data[grid_pos]
+func place_hex_tile(scene_to_place, grid_pos: Vector2i):
+	if not height_data.has(grid_pos): return
+	var height = height_data[grid_pos]
+	
+	var q = grid_pos.x
+	var r = grid_pos.y
+	#one unit movement in q, changes X value sqrt(3) to right
+	#and one unit movement in r, changes X value sqrt(3)/2 to right
+	var hex_x_position_in_world = hex_size * (sqrt(3) * q + sqrt(3) / 2.0 * r)
+	#one unit movement in r, changes Z value 3/2 downwards
+	#moving one step in the r direction changes the Z axis value by itself
+	#it makes a 60 degree angle downwards with the X axis
+	#q movement does not affect the Z axis
+	var hex_z_position_in_world = hex_size * (3.0 / 2.0 * r)
+		
+	var scene_instance = scene_to_place.instantiate()
+	add_child(scene_instance)
+	#Vector3 suits better, floating numbers needed for a more sensitive and smooth positioning
+	scene_instance.position = Vector3(hex_x_position_in_world, height, hex_z_position_in_world)
+	
+	print("Warning: The structure belonging to the scene could not be built, its location could not be found on the map")
 
 
 func build_the_world():
-	if height_data.has(main_base_location):
+	"""if height_data.has(main_base_location):
 		var q = main_base_location.x
 		var r = main_base_location.y
 		var height = height_data[main_base_location]
@@ -184,20 +237,30 @@ func build_the_world():
 		#Vector3 suits better, floating numbers needed for a more delicate and smooth positioning
 		castle_instance.position = Vector3(world_x, height, world_z)
 	else:
-		print("Warning: Main building could not be built, its location could not be found on the map")
+		print("Warning: Main building could not be built, its location could not be found on the map")"""
 	
+	"""if main_base_location != null:
+		place_hex_tile(MAIN_CASTLE_SCENE, main_base_location)
+	if storehouse_location != null:
+		place_hex_tile(STOREHOUSE_SCENE, storehouse_location)
+	if home_location != null:
+		place_hex_tile(SMALL_HOUSE_SCENE, home_location)
+	if blacksmith_location != null:
+		place_hex_tile(BLACKSMITH_SCENE, blacksmith_location)""" 
+		
+	for scene_to_build in building_locations.keys():
+		var grid_pos = building_locations[scene_to_build]
+		place_hex_tile(scene_to_build, grid_pos)
 	
 	for grid_pos in height_data.keys():
-		var height = height_data[grid_pos]
-		if height < 0:
-			var water_instance = HEX_WATER_SCENE.instantiate()
-			add_child(water_instance)
-		elif height >= 0 and height < 10:
-			var grass_instance = HEX_GRASS_SCENE.instantiate()
-			add_child(grass_instance)
-		else:
-			var dirt_instance = HEX_DIRT_SCENE.instantiate()
-			add_child(dirt_instance)
+		if not occupied_hexes.has(grid_pos):
+			var height = height_data[grid_pos]
+			if height < 0:
+				place_hex_tile(HEX_WATER_SCENE, grid_pos)
+			elif height >= 0 and height < 10:
+				place_hex_tile(HEX_GRASS_SCENE, grid_pos)
+			else:
+				place_hex_tile(HEX_DIRT_SCENE, grid_pos)
 		
 	
 	

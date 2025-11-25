@@ -7,6 +7,7 @@
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_mc2jv")
+world_radius = 50
 noise = SubResource("FastNoiseLite_fj7yv")
 
 [node name="CameraPosition" type="Node3D" parent="."]
