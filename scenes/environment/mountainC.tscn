@@ -7,6 +7,7 @@ height = 1.4377441
 radius = 1.0092773
 
 [node name="mountainC" type="Node3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="mountain_C2" parent="." instance=ExtResource("1_jye56")]
 

@@ -7,6 +7,7 @@ height = 0.20594788
 radius = 0.8774414
 
 [node name="trees_cut" type="Node3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="trees_A_cut2" parent="." instance=ExtResource("1_n8iu4")]
 

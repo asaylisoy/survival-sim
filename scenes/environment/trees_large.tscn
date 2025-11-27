@@ -7,6 +7,7 @@ height = 0.87820435
 radius = 1.0009766
 
 [node name="trees_large" type="Node3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="trees_A_large2" parent="." instance=ExtResource("1_7bhla")]
 

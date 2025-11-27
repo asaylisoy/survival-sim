@@ -6,6 +6,7 @@
 size = Vector3(1.4001465, 1.6158142, 1.3906555)
 
 [node name="storehouse" type="Node3D"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 
 [node name="building_barracks_red2" parent="." instance=ExtResource("1_pvpic")]
 
