@@ -1,0 +1,239 @@
+[gd_scene load_steps=29 format=3 uid="uid://ss3jtpj0ovma"]
+
+[ext_resource type="Script" uid="uid://d4kaqbgrl0jwq" path="res://scenes/ui/pause_menu.gd" id="1_cukyy"]
+[ext_resource type="Texture2D" uid="uid://b4268ibariwy3" path="res://Source/building_pngs/building_windmill_blue.png" id="1_voseu"]
+[ext_resource type="Script" uid="uid://dmparxx12hn0g" path="res://scenes/ui/building_menu.gd" id="2_b0pke"]
+[ext_resource type="Texture2D" uid="uid://c8u1s0o4of5w5" path="res://Source/building_pngs/building_watermill_blue.png" id="2_lxyh1"]
+[ext_resource type="Texture2D" uid="uid://b3sehjloq7l05" path="res://Source/building_pngs/building_home_A_blue.png" id="3_idwt5"]
+[ext_resource type="Texture2D" uid="uid://cheloptsed7v8" path="res://Source/building_pngs/building_well_blue.png" id="4_nb0rr"]
+[ext_resource type="Texture2D" uid="uid://d3ol2154qmnq5" path="res://Source/building_pngs/building_tavern_blue.png" id="5_unot2"]
+[ext_resource type="Texture2D" uid="uid://b0falkmbuvr32" path="res://Source/building_pngs/building_lumbermill_blue.png" id="6_yi61m"]
+[ext_resource type="Texture2D" uid="uid://byaxnwj6eqrdh" path="res://Source/building_pngs/building_mine_blue.png" id="7_7dk0x"]
+[ext_resource type="Texture2D" uid="uid://cfvyaoch3xvr2" path="res://Source/building_pngs/building_scaffolding.png" id="8_mc3d8"]
+[ext_resource type="Texture2D" uid="uid://ca2fw81ijhb4k" path="res://Source/building_pngs/fence_wood_straight.png" id="9_i8bsf"]
+[ext_resource type="Texture2D" uid="uid://rc84pcjachu2" path="res://Source/building_pngs/fence_wood_straight_gate.png" id="10_csct8"]
+[ext_resource type="Texture2D" uid="uid://ckuhmtx1sv2r5" path="res://Source/building_pngs/wall_straight.png" id="11_2mivd"]
+[ext_resource type="Texture2D" uid="uid://djiw625fkmu85" path="res://Source/building_pngs/wall_straight_gate.png" id="12_f3sx6"]
+[ext_resource type="Texture2D" uid="uid://bdsf7bu1tsxkd" path="res://Source/building_pngs/building_castle_blue.png" id="13_yprc8"]
+[ext_resource type="Texture2D" uid="uid://bo3tpqsf0cg1c" path="res://Source/building_pngs/building_tower_base_blue.png" id="14_cukyy"]
+[ext_resource type="Texture2D" uid="uid://b2m8vodcvq5qa" path="res://Source/building_pngs/building_barracks_blue.png" id="15_b0pke"]
+[ext_resource type="Texture2D" uid="uid://dkdftpusr6b6n" path="res://Source/building_pngs/building_archeryrange_blue.png" id="16_0yl3y"]
+[ext_resource type="Texture2D" uid="uid://ch38box6ro80v" path="res://Source/building_pngs/building_church_blue.png" id="17_p7ee6"]
+[ext_resource type="Texture2D" uid="uid://qrlotis6rf7w" path="res://Source/building_pngs/building_blacksmith_blue.png" id="18_xcqfi"]
+[ext_resource type="Texture2D" uid="uid://bs3eyqertosdw" path="res://Source/building_pngs/building_market_blue.png" id="19_ujfxj"]
+[ext_resource type="Texture2D" uid="uid://dixw44pvm2gct" path="res://Source/building_pngs/hex_road_A.png" id="20_hc67h"]
+[ext_resource type="Texture2D" uid="uid://bblws6hkxg3iy" path="res://Source/kenney_cursor-pack/PNG/Basic/Default/steps.png" id="21_2mivd"]
+[ext_resource type="Texture2D" uid="uid://c2g71tple65n5" path="res://Source/building_pngs/building_home_B_blue.png" id="21_f3sx6"]
+[ext_resource type="Texture2D" uid="uid://ba80300jogy2q" path="res://Source/kenney_cursor-pack/PNG/Basic/Default/tool_pickaxe.png" id="22_f3sx6"]
+[ext_resource type="Texture2D" uid="uid://ctvtn50avy6dl" path="res://Source/kenney_cursor-pack/PNG/Basic/Default/tool_bow.png" id="23_yprc8"]
+[ext_resource type="Texture2D" uid="uid://b03ytjhehtlo2" path="res://Source/kenney_cursor-pack/PNG/Basic/Default/tool_wrench.png" id="24_cukyy"]
+[ext_resource type="Texture2D" uid="uid://j6vb33vn40t" path="res://Source/kenney_cursor-pack/PNG/Basic/Default/tool_sword_b.png" id="25_b0pke"]
+
+[node name="Strategy_UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Pause_Menu" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -100.0
+offset_right = 50.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+pivot_offset = Vector2(50, 100)
+script = ExtResource("1_cukyy")
+
+[node name="MarginContainer" type="MarginContainer" parent="Pause_Menu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause_Menu/MarginContainer"]
+layout_mode = 2
+
+[node name="Pause Menu" type="Label" parent="Pause_Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Pause Menu"
+
+[node name="Main Menu" type="Button" parent="Pause_Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+icon_alignment = 1
+
+[node name="Save Game" type="Button" parent="Pause_Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Save Game"
+
+[node name="Load Game" type="Button" parent="Pause_Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Load Game"
+
+[node name="Options" type="Button" parent="Pause_Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="Exit Game" type="Button" parent="Pause_Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit Game"
+
+[node name="Building Menu" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.5, 1.5)
+script = ExtResource("2_b0pke")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Building Menu"]
+layout_mode = 2
+
+[node name="Food Buildings" type="VBoxContainer" parent="Building Menu/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Building Menu/MarginContainer/Food Buildings"]
+layout_mode = 2
+text = "Food"
+horizontal_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="Building Menu/MarginContainer/Food Buildings"]
+layout_mode = 2
+allow_search = false
+auto_width = true
+auto_height = true
+item_count = 6
+max_columns = 6
+icon_scale = 0.1
+item_0/icon = ExtResource("1_voseu")
+item_1/icon = ExtResource("2_lxyh1")
+item_2/icon = ExtResource("3_idwt5")
+item_3/icon = ExtResource("3_idwt5")
+item_4/icon = ExtResource("4_nb0rr")
+item_5/icon = ExtResource("5_unot2")
+
+[node name="Resource Buildings" type="VBoxContainer" parent="Building Menu/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Building Menu/MarginContainer/Resource Buildings"]
+layout_mode = 2
+text = "Resource"
+horizontal_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="Building Menu/MarginContainer/Resource Buildings"]
+layout_mode = 2
+allow_search = false
+auto_width = true
+auto_height = true
+item_count = 4
+max_columns = 4
+icon_scale = 0.1
+item_0/icon = ExtResource("3_idwt5")
+item_1/icon = ExtResource("6_yi61m")
+item_2/icon = ExtResource("7_7dk0x")
+item_3/icon = ExtResource("8_mc3d8")
+
+[node name="Defensive Buildings" type="VBoxContainer" parent="Building Menu/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Building Menu/MarginContainer/Defensive Buildings"]
+layout_mode = 2
+text = "Defensive "
+horizontal_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="Building Menu/MarginContainer/Defensive Buildings"]
+layout_mode = 2
+allow_search = false
+auto_width = true
+auto_height = true
+item_count = 8
+max_columns = 10
+icon_scale = 0.1
+item_0/icon = ExtResource("9_i8bsf")
+item_1/icon = ExtResource("10_csct8")
+item_2/icon = ExtResource("11_2mivd")
+item_3/icon = ExtResource("12_f3sx6")
+item_4/icon = ExtResource("13_yprc8")
+item_5/icon = ExtResource("14_cukyy")
+item_6/icon = ExtResource("15_b0pke")
+item_7/icon = ExtResource("16_0yl3y")
+
+[node name="Improvement Buildings" type="VBoxContainer" parent="Building Menu/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Building Menu/MarginContainer/Improvement Buildings"]
+layout_mode = 2
+text = "Improvement"
+horizontal_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="Building Menu/MarginContainer/Improvement Buildings"]
+layout_mode = 2
+auto_width = true
+auto_height = true
+item_count = 3
+max_columns = 7
+icon_scale = 0.1
+item_0/icon = ExtResource("17_p7ee6")
+item_1/icon = ExtResource("18_xcqfi")
+item_2/icon = ExtResource("19_ujfxj")
+
+[node name="Infrastructure Buildings" type="VBoxContainer" parent="Building Menu/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Building Menu/MarginContainer/Infrastructure Buildings"]
+layout_mode = 2
+text = "Infrastructure"
+horizontal_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="Building Menu/MarginContainer/Infrastructure Buildings"]
+layout_mode = 2
+auto_width = true
+auto_height = true
+item_count = 3
+max_columns = 3
+icon_scale = 0.1
+item_0/icon = ExtResource("20_hc67h")
+item_1/icon = ExtResource("3_idwt5")
+item_2/icon = ExtResource("21_f3sx6")
+
+[node name="Building Types" type="VBoxContainer" parent="Building Menu/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Building Menu/MarginContainer/Building Types"]
+layout_mode = 2
+text = "Building"
+horizontal_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="Building Menu/MarginContainer/Building Types"]
+layout_mode = 2
+auto_width = true
+auto_height = true
+item_count = 5
+max_columns = 6
+icon_scale = 1.5
+item_0/icon = ExtResource("21_2mivd")
+item_1/icon = ExtResource("22_f3sx6")
+item_2/icon = ExtResource("23_yprc8")
+item_3/icon = ExtResource("24_cukyy")
+item_4/icon = ExtResource("25_b0pke")

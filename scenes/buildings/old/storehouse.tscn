@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxrxa12jmul0u"]
+
+[ext_resource type="PackedScene" uid="uid://21vuwhn40vhd" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/red/building_barracks_red.gltf" id="1_pvpic"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lkfbw"]
+size = Vector3(1.4001465, 1.6158142, 1.3906555)
+
+[node name="storehouse" type="Node3D"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="building_barracks_red2" parent="." instance=ExtResource("1_pvpic")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0030517578, 0.802536, 0.010787964)
+shape = SubResource("BoxShape3D_lkfbw")

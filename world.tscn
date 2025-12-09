@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dx61o702i8q42"]
+[gd_scene load_steps=7 format=3 uid="uid://dx61o702i8q42"]
 
 [ext_resource type="Script" uid="uid://8xu3arfv8fjy" path="res://world_generator.gd" id="1_mc2jv"]
 [ext_resource type="Script" uid="uid://e1liptxr06ix" path="res://camera_position.gd" id="1_wjb0r"]
+[ext_resource type="PackedScene" uid="uid://ss3jtpj0ovma" path="res://scenes/ui/strategy_ui.tscn" id="2_aqk2v"]
+[ext_resource type="PackedScene" path="res://scenes/characters/villager_a.tscn" id="4_036b0"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fj7yv"]
 
@@ -11,6 +13,8 @@
 script = ExtResource("1_mc2jv")
 noise = SubResource("FastNoiseLite_fj7yv")
 decoration_noise = SubResource("FastNoiseLite_tlwt5")
+
+[node name="Strategy_UI" parent="." instance=ExtResource("2_aqk2v")]
 
 [node name="CameraPosition" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7715759, 0, 9.968315)
@@ -30,6 +34,8 @@ transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.7660
 [node name="Buildings" type="Node3D" parent="."]
 
 [node name="Villagers" type="Node3D" parent="."]
+
+[node name="Villeger_A" parent="Villagers" instance=ExtResource("4_036b0")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, -15.825035, 53.562553, -8.6625595)
