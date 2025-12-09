@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=3 uid="uid://tj7ytiuuu4fv"]
+
+[ext_resource type="PackedScene" uid="uid://b0s2yavtgdohi" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/blue/building_castle_blue.gltf" id="1_84rdl"]
+[ext_resource type="Script" uid="uid://ki5m6xc78cu0" path="res://scenes/buildings/castle.gd" id="2_pbpso"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pbpso"]
+height = 4.0
+radius = 1.13
+
+[node name="Castle" node_paths=PackedStringArray("meshes") instance=ExtResource("1_84rdl")]
+script = ExtResource("2_pbpso")
+meshes = [NodePath("building_castle_blue")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("CylinderShape3D_pbpso")
+
+[node name="RayCast3D" type="RayCast3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.975, 0.1, 0.575)
+target_position = Vector3(0, -0.1, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.975, 0.1, -0.575)
+target_position = Vector3(0, -0.1, 0)
+
+[node name="RayCast3D3" type="RayCast3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -1.13)
+target_position = Vector3(0, -0.1, 0)
+
+[node name="RayCast3D4" type="RayCast3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.975, 0.1, -0.575)
+target_position = Vector3(0, -0.1, 0)
+
+[node name="RayCast3D5" type="RayCast3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.975, 0.1, 0.575)
+target_position = Vector3(0, -0.1, 0)
+
+[node name="RayCast3D6" type="RayCast3D" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.1, 1.11)
+target_position = Vector3(0, -0.1, 0)
+
+[node name="RayCast3D7" type="RayCast3D" parent="." index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.1, 1.11)
+target_position = Vector3(0, -0.1, 0)
+
+[node name="Building Info Point" type="Control" parent="." index="9"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Building Info Point" index="0"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Building_Type" type="Label" parent="Building Info Point/NinePatchRect" index="0"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Building Info Point/NinePatchRect" index="1"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Hitpoints" type="Label" parent="Building Info Point/NinePatchRect/HBoxContainer" index="0"]
+layout_mode = 2
+
+[node name="Spawn_Villager" type="Button" parent="Building Info Point/NinePatchRect" index="2"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0

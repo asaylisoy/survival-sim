@@ -12,8 +12,9 @@ var speed
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var nav_agent = $NavigationAgent3D
 
+
+#func _ready() -> void:
 '''
-func _ready() -> void:
 	var agent = GoapAgent.new()
 	#defines which goals are available for the villager
 	agent.init(self, [
@@ -21,8 +22,11 @@ func _ready() -> void:
 	])
 	add_child(agent)
 '''
+	
+
+
 func _physics_process(delta: float) -> void:
-	pass
+	update_animation_parameters()
 	
 	
 func move_to(direction, delta):

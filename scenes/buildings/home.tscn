@@ -14,9 +14,6 @@ meshes = [NodePath("building_home_A_blue")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47, -0.035)
 shape = SubResource("BoxShape3D_h01oc")
 
-[node name="NavigationRegion3D" parent="building_home_A_blue" index="0"]
-visible = false
-
 [node name="RayCast3D" type="RayCast3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.1, -0.46)
 target_position = Vector3(0, -0.1, 0)

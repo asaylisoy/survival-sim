@@ -1,5 +1,6 @@
-[gd_scene load_steps=29 format=3 uid="uid://ss3jtpj0ovma"]
+[gd_scene load_steps=30 format=3 uid="uid://ss3jtpj0ovma"]
 
+[ext_resource type="Script" uid="uid://dw6rd8e6b33s3" path="res://scenes/ui/main_menu.gd" id="1_b0pke"]
 [ext_resource type="Script" uid="uid://d4kaqbgrl0jwq" path="res://scenes/ui/pause_menu.gd" id="1_cukyy"]
 [ext_resource type="Texture2D" uid="uid://b4268ibariwy3" path="res://Source/building_pngs/building_windmill_blue.png" id="1_voseu"]
 [ext_resource type="Script" uid="uid://dmparxx12hn0g" path="res://scenes/ui/building_menu.gd" id="2_b0pke"]
@@ -37,6 +38,48 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Main_Menu" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b0pke")
+
+[node name="MarginContainer" type="MarginContainer" parent="Main_Menu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main_Menu/MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Main_Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Mediaval Hex Survival"
+horizontal_alignment = 1
+
+[node name="Play Game" type="Button" parent="Main_Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play Game"
+
+[node name="Load Game" type="Button" parent="Main_Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Load Game"
+
+[node name="Options" type="Button" parent="Main_Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="Exit Game" type="Button" parent="Main_Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit Game"
 
 [node name="Pause_Menu" type="PanelContainer" parent="."]
 process_mode = 3
@@ -243,6 +286,10 @@ item_2/icon = ExtResource("23_yprc8")
 item_3/icon = ExtResource("24_cukyy")
 item_4/icon = ExtResource("25_b0pke")
 
+[connection signal="pressed" from="Main_Menu/MarginContainer/VBoxContainer/Play Game" to="Main_Menu" method="_on_play_game_pressed"]
+[connection signal="pressed" from="Main_Menu/MarginContainer/VBoxContainer/Load Game" to="Main_Menu" method="_on_load_game_pressed"]
+[connection signal="pressed" from="Main_Menu/MarginContainer/VBoxContainer/Options" to="Main_Menu" method="_on_options_pressed"]
+[connection signal="pressed" from="Main_Menu/MarginContainer/VBoxContainer/Exit Game" to="Main_Menu" method="_on_exit_game_pressed"]
 [connection signal="pressed" from="Pause_Menu/MarginContainer/VBoxContainer/Main Menu" to="Pause_Menu" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="Pause_Menu/MarginContainer/VBoxContainer/Save Game" to="Pause_Menu" method="_on_save_game_pressed"]
 [connection signal="pressed" from="Pause_Menu/MarginContainer/VBoxContainer/Load Game" to="Pause_Menu" method="_on_load_game_pressed"]

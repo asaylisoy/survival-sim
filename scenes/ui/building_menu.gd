@@ -17,13 +17,17 @@ extends PanelContainer
 @onready var types_item_list = $MarginContainer/BuildingTypes/ItemList
 #Building list
 @onready var home =  preload("res://scenes/buildings/home.tscn")
+@onready var castle =  preload("res://scenes/buildings/castle.tscn")
+@onready var tavern =  preload("res://scenes/buildings/tavern.tscn")
 
+@onready var villager =  preload("res://scenes/characters/villager_a.tscn")
 
 var camera
 var instance
 var placing = false
 var range = 1000
 var can_place = false
+var spawning = false
 
 
 func _ready() -> void:
@@ -46,7 +50,7 @@ func _process(delta: float) -> void:
 		var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
 		var collision = camera.get_world_3d().direct_space_state.intersect_ray(query)
 		if collision:
-			instance.transform.origin = collision.position
+			instance.transform.origin = collision.position # Invalid access to property or key 'transform' on a base object of type 'previously freed'. , wenn die Kamera beim platzieren bewegt wird
 			can_place = instance.check_placement()
 		
 	if Input.is_action_just_pressed("ui_right_click"):
@@ -68,6 +72,16 @@ func _process(delta: float) -> void:
 		
 		building_types.visible = true
 		
+	if spawning:
+		var spawn = buildings.get_node("Castle")
+		var ray_origin = spawn.origin
+		var ray_end = ray_origin * 10
+		var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+		var collision = camera.get_world_3d().direct_space_state.intersect_ray(query)
+		if collision:
+			instance.transform.origin = collision.position
+			#can_spawn = instance.check_placement()
+		
 		
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_left_click") and can_place:
@@ -75,9 +89,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		can_place = false
 		instance.placed()
 		
-
+	if event.is_action_pressed("ui_right_click"):
+		placing = false
+		can_place = false
+		instance.queue_free()
 
 func _on_food_item_list_item_selected(index: int) -> void:
+	if placing:
+		instance.queue_free()
 	match index:
 		0:
 			pass
@@ -90,8 +109,10 @@ func _on_food_item_list_item_selected(index: int) -> void:
 		4:
 			pass
 		5:
-			pass
+			instance = tavern.instantiate()
 	food_item_list.deselect_all()
+	placing = true
+	buildings.add_child(instance)
 
 
 func _on_resource_item_list_item_selected(index: int) -> void:
@@ -108,6 +129,8 @@ func _on_resource_item_list_item_selected(index: int) -> void:
 
 
 func _on_defensive_item_list_item_selected(index: int) -> void:
+	if placing:
+		instance.queue_free()
 	match index:
 		0:
 			pass
@@ -118,7 +141,7 @@ func _on_defensive_item_list_item_selected(index: int) -> void:
 		3:
 			pass
 		4:
-			pass
+			instance = castle.instantiate()
 		5:
 			pass
 		6:
@@ -126,6 +149,8 @@ func _on_defensive_item_list_item_selected(index: int) -> void:
 		7:
 			pass
 	defensive_item_list.deselect_all()
+	placing = true
+	buildings.add_child(instance)
 
 
 func _on_improvement_item_list_item_selected(index: int) -> void:
@@ -169,3 +194,13 @@ func _on_type_item_list_item_selected(index: int) -> void:
 		4:
 			defensive_buildings.visible = true
 	types_item_list.deselect_all()
+
+
+func spawn_villager() -> void:
+	instance = villager.instantiate()
+	placing = true
+	buildings.add_child(instance)
+	
+	placing = false
+	can_place = false
+	instance.placed()

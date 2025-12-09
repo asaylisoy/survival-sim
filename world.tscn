@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://8xu3arfv8fjy" path="res://world_generator.gd" id="1_mc2jv"]
 [ext_resource type="Script" uid="uid://e1liptxr06ix" path="res://camera_position.gd" id="1_wjb0r"]
 [ext_resource type="PackedScene" uid="uid://ss3jtpj0ovma" path="res://scenes/ui/strategy_ui.tscn" id="2_aqk2v"]
-[ext_resource type="PackedScene" path="res://scenes/characters/villager_a.tscn" id="4_036b0"]
+[ext_resource type="PackedScene" uid="uid://uwo3krbweicm" path="res://scenes/characters/villager_a.tscn" id="4_036b0"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fj7yv"]
 
