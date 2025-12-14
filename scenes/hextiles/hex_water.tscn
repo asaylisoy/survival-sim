@@ -1,18 +1,19 @@
 [gd_scene load_steps=3 format=3 uid="uid://dgj4mbqr3gke5"]
 
-[ext_resource type="PackedScene" uid="uid://bmvs3qkdwi0xo" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/tiles/base/hex_water.gltf" id="1_wfh00"]
+[ext_resource type="PackedScene" uid="uid://b7ntrtkdqu2tk" path="res://Source/new_gltf_from_blender/hex_water_thick.glb" id="2_rqwhk"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_rqwhk"]
-height = 0.04019165
+height = 2.9898872
 radius = 1.1450195
 
 [node name="hex_water" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19754255, 0)
 
-[node name="hex_water2" parent="." instance=ExtResource("1_wfh00")]
-
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22200012, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6968479, 0)
 shape = SubResource("CylinderShape3D_rqwhk")
+
+[node name="hex_water_thick" parent="StaticBody3D" instance=ExtResource("2_rqwhk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2054215, 0)

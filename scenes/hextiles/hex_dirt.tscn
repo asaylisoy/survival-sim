@@ -1,18 +1,17 @@
 [gd_scene load_steps=3 format=3 uid="uid://c8nvhm40iy6h4"]
 
-[ext_resource type="PackedScene" uid="uid://coo0tvedkylk4" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/buildings/neutral/building_dirt.gltf" id="1_7mwhj"]
+[ext_resource type="PackedScene" uid="uid://crkvmx00ms1bd" path="res://Source/new_gltf_from_blender/hex_dirt_thick.glb" id="2_mwgpr"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_mwgpr"]
-height = 0.07324219
+height = 2.6437988
 radius = 0.9848633
 
 [node name="hex_dirt" type="Node3D"]
 
-[node name="building_dirt2" parent="." instance=ExtResource("1_7mwhj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.046982348, 0)
-
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.030273438, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3155518, 0)
 shape = SubResource("CylinderShape3D_mwgpr")
+
+[node name="hex_dirt_thick" parent="." instance=ExtResource("2_mwgpr")]
