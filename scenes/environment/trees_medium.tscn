@@ -7,7 +7,6 @@ height = 1.0288086
 radius = 0.90625
 
 [node name="trees_medium" type="Node3D"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="trees_A_medium2" parent="." instance=ExtResource("1_jrltx")]
 

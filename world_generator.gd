@@ -71,14 +71,17 @@ func _ready():
 	noise.seed = randi()
 	decoration_noise.seed = randi()
 	
+	noise.frequency = 0.015
+	decoration_noise.frequency = 0.1
+	
 	generate_world_data()
-	print("altigen dünya veri haritasi olusturuldu.")
+	print("hexagonal world data map created")
 	place_fixed_structures()#TODO
 	build_the_world()#TODO
-	print("Altigen dünya olusturma tamamlandi")
+	print("hexagonal world generation completed")
 	
 func generate_world_data():
-	print("yükseklik verisi üretiliyor...")
+	print("height data is being generated...")
 	#q ve r icin, merkezden yaricap kadar her yöne giden döngüler
 	for q in range(-world_radius, world_radius + 1):
 		for r in range(-world_radius, world_radius + 1):
@@ -169,7 +172,8 @@ func place_fixed_structures():
 		suitable_locations.erase(random_pos)
 		
 		var height_at_pos = height_data[random_pos]
-		var flatten_radius = 2
+		#deprecated for now
+		var flatten_radius = 0
 		var area_to_flatten = get_hex_area(random_pos, flatten_radius)
 		
 		for hex_pos in area_to_flatten:
@@ -181,12 +185,18 @@ func place_fixed_structures():
 
 #param scene is the scene that will be initiated such as buildings, tiles...
 #param grid_pos is the position 
-func place_hex_tile(scene_to_place, grid_pos: Vector2i):
+func place_hex_tile(scene_to_place, grid_pos: Vector2i, custom_height = null):
 	if not height_data.has(grid_pos): 
 		print("Warning: The structure belonging to the scene could not be built, its location could not be found on the map")
 		return
 
-	var height = height_data[grid_pos]
+	#for logic purposes
+	var map_height = height_data[grid_pos]
+	#for visual purposes 
+	var visual_height = map_height
+	#if specific height is given(for water for example), use that
+	if custom_height != null:
+		visual_height = custom_height
 	
 	var q = grid_pos.x
 	var r = grid_pos.y
@@ -202,10 +212,13 @@ func place_hex_tile(scene_to_place, grid_pos: Vector2i):
 	var scene_instance = scene_to_place.instantiate()
 	add_child(scene_instance)
 	#Vector3 suits better, floating numbers needed for a more sensitive and smooth positioning
-	scene_instance.position = Vector3(hex_x_position_in_world, height, hex_z_position_in_world)
+	scene_instance.position = Vector3(hex_x_position_in_world, visual_height, hex_z_position_in_world)
 
 
 func build_the_world():
+	
+	#a constant water level is determined, makes sense when it's equal to lowest grass' level
+	const WATER_LEVEL = -4.0
 	
 	for scene_to_build in building_locations.keys():
 		var grid_pos = building_locations[scene_to_build]
@@ -216,19 +229,21 @@ func build_the_world():
 		#if condition below is unnecessary because when its used the tiles under the buildings remain empty 
 		#if not occupied_hexes.has(grid_pos):
 			var height = height_data[grid_pos]
-			if height < -3:
-				place_hex_tile(HEX_WATER_SCENE, grid_pos)
-			elif height >= -3 and height < 4:
+			if height < -4:
+				#now we give here constant water level as third parameter 
+				#thus, water surface stays always at -4.0
+				place_hex_tile(HEX_WATER_SCENE, grid_pos, WATER_LEVEL)
+			elif height >= -4 and height < 4:
 				place_hex_tile(HEX_GRASS_SCENE, grid_pos)
 				var decoration_value = decoration_noise.get_noise_2d(grid_pos.x, grid_pos.y)
-				if decoration_value > 0.1:
+				if decoration_value > 0.2:
 					var trees = [TREES_SMALL_SCENE, TREES_MEDIUM_SCENE, TREES_LARGE_SCENE]
 					var random_tree = trees.pick_random()
 					place_hex_tile(random_tree, grid_pos)
 			else:
 				place_hex_tile(HEX_DIRT_SCENE, grid_pos)
 				var decoration_value = decoration_noise.get_noise_2d(grid_pos.x, grid_pos.y)
-				if decoration_value > 0.25:
+				if decoration_value > 0.3:
 					var mountains = [MOUNTAINA_SCENE, MOUNTAINB_SCENE, MOUNTAINC_SCENE]
 					var random_mountain = mountains.pick_random()
 					place_hex_tile(random_mountain, grid_pos)
