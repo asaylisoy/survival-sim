@@ -6,7 +6,6 @@
 size = Vector3(1.7236023, 3.710312, 1.9951324)
 
 [node name="CastleMain" type="Node3D"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 
 [node name="building_castle_red2" parent="." instance=ExtResource("1_0538a")]
 

@@ -6,7 +6,6 @@
 size = Vector3(1.1851196, 0.96762085, 1.0780029)
 
 [node name="blacksmith" type="Node3D"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 
 [node name="building_blacksmith_red2" parent="." instance=ExtResource("1_01ff7")]
 
