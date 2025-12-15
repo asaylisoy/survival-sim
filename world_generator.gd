@@ -14,7 +14,7 @@ extends Node3D
 @export var decoration_noise: FastNoiseLite
 
 
-# ---SAHNE KÜTÜPHANESI (PRELOADS)---
+# ---SCENE LIBRARY (PRELOADS)---
 
 #BUILDINGS
 const MAIN_CASTLE_SCENE = preload("res://scenes/buildings/castle_main.tscn")
@@ -36,6 +36,119 @@ const MOUNTAINC_SCENE = preload("res://scenes/environment/mountainC.tscn")
 #CHARACTERS
 const BARBARIAN_SCENE = preload("res://scenes/characters/barbarian.tscn")
 const KNIGHT_SCENE = preload("res://scenes/characters/knight.tscn")
+
+
+# ---NAVIGATION (PATHFINDING) SYSTEM---
+
+#creating a new object from AStar2D class
+#this is going to be our navigation map
+var astar = AStar2D.new()
+
+func setup_navigation():
+	print("Navigation network is being created...")
+	astar.clear()#clear if an old map data exists
+	
+	#STEP 1: adding points (walkable hexes)
+	#controlling every hex in height_data
+	for grid_pos in height_data.keys():
+		var height = height_data[grid_pos]
+		
+		#only heights above water surface are walkable (height >= -4)
+		if height >= -4:
+			#produce unique ID's for every single coordinate
+			var point_id = get_id_from_coords(grid_pos)
+			
+			#calculate hex's 2D position in real world (x, z)
+			#AStar wants to know the positions in real world to determine which point is closer to target
+			#world_pos_3d keeps the real world position of each point
+			#and navigation_pos_2d takes only the x and z values since y makes no difference in position calculations
+			var world_pos_3d = hex_to_world_center(grid_pos)
+			var navigation_pos_2d = Vector2(world_pos_3d.x, world_pos_3d.z)
+			
+			#add every point to the system
+			#first parameter is ID and the second one is position
+			astar.add_point(point_id, navigation_pos_2d)
+	
+	
+	#get the list of IDs which was added to AStar 
+	var point_ids = astar.get_point_ids()
+	
+	for point_id in point_ids:
+		#take coordinates from IDs this time
+		var grid_pos = get_coords_from_id(point_id)
+		#find 6 neighbors of the current hex
+		var neighbors = get_neighbors(grid_pos.x, grid_pos.y)
+		
+		for neighbor_pos in neighbors:
+			var neighbor_id = get_id_from_coords(neighbor_pos)
+			
+			#checks if the neighbor is also registered in astar system (if its water)
+			if astar.has_point(neighbor_id):
+				
+				#checks if the current hex is already connected to neighbor hexes 
+				if not astar.are_points_connected(point_id, neighbor_id):
+					#if not, connect them
+					#astar connections are bidirectional (A->B -> B->A)
+					astar.connect_points(point_id, neighbor_id)
+	
+	print("Navigation network is ready. Total points: ", astar.get_point_count())
+	
+
+func get_id_from_coords(point: Vector2i) -> int:
+	#adding here an offset to coordinate values to get rid of the negatives
+	var offset = world_radius + 1
+	var q = point.x + offset
+	var r = point.y + offset
+	#multiplying q with 1000 here and adding r to it makes this number unique
+	#uses injective encoding where one axial coordinate defines a block offset and the other defines an intra-block index
+	#q is like building number and r is like apartment number
+	return q * 1000 + r
+
+func get_coords_from_id(id: int) -> Vector2i:
+	var offset = world_radius + 1
+	var q = id / 1000#integer division
+	var r = id % 1000#remainder
+	q -= offset
+	r -= offset
+	return Vector2i(q, r)
+
+
+func hex_to_world_center(hex: Vector2i) -> Vector3:
+	var q = hex.x
+	var r = hex.y
+	
+	#pointy-top calculations
+	var x = hex_size * (sqrt(3) * q + sqrt(3) / 2.0 * r)
+	var z = hex_size * (3.0 / 2.0 * r)
+	
+	return Vector3(x, 0 , z)
+
+
+func get_hex_path(start_hex_coords: Vector2i, target_hex_coords: Vector2i) -> Array[Vector2i]:
+	#converts coords to IDs which AStar can understand
+	var start_hex_id = get_id_from_coords(start_hex_coords)
+	var target_hex_id = get_id_from_coords(target_hex_coords)
+	
+	#checks if the path (start and target hexes) is walkable
+	#if one of them is not walkable (is water) return
+	if not astar.has_point(start_hex_id) or not astar.has_point(target_hex_id):
+		return []
+	
+	#gets ID list of path from AStar like [1001, 1002, 1005, 1008...]
+	var path_in_ids = astar.get_id_path(start_hex_id, target_hex_id)
+	
+	#we should convert ID list back into coordinate list and hold these values in this array
+	#we will not use IDs but Vector2i(q, r) values
+	var path_in_hex_coords: Array[Vector2i] = []
+	
+	for point_id in path_in_ids:
+		#got the coordinates back from ID path and added them to output array
+		var hex_coords = get_coords_from_id(point_id)
+		path_in_hex_coords.append(hex_coords)
+	
+	#output example: [(0,0), (1,0), (1,-1), (2,-1)]
+	return path_in_hex_coords
+
 
 #bir altıgenin 6 komşusunun yönünü tutan sabit bir dizi. Bu bizim yeni offset'imiz.
 const HEX_DIRECTIONS = [
@@ -71,8 +184,8 @@ func _ready():
 	noise.seed = randi()
 	decoration_noise.seed = randi()
 	
-	noise.frequency = 0.015
-	decoration_noise.frequency = 0.1
+	noise.frequency = 0.01
+	decoration_noise.frequency = 0.2
 	
 	generate_world_data()
 	print("hexagonal world data map created")
