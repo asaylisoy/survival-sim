@@ -8,6 +8,9 @@ var live = 100  #shows the livepoints of a villager. goes from 0 to 100
 var happyness = 100 #shows the happyness of a villager. goes from 0 to 100
 var hunger = 100 #shows the food saturation of the villager. goes from 0 to 100
 var speed
+var alive = true
+
+@onready var buildings = $"../../Buildings"
 
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var nav_agent = $NavigationAgent3D
@@ -27,6 +30,21 @@ var speed
 
 func _physics_process(delta: float) -> void:
 	update_animation_parameters()
+
+	if(alive):
+		if(rest > 0):
+			rest -= 1
+		else:
+			get_hit(1)
+		
+		if(hunger > 0):
+			hunger -= 1
+		else:
+			get_hit(1)
+		
+	if(live > 0):
+		animation_tree["parameters/Villager_A/conditions/is_dead"] = true
+		alive = false
 	
 	
 func move_to(direction, delta):
@@ -43,10 +61,28 @@ func update_animation_parameters():
 		animation_tree["parameters/Villager_A/conditions/idle"] = true
 		
 	
-func get_hit():
-	pass
-
-
+func get_hit(hit: int):
+	animation_tree["parameters/Villager_A/conditions/is_hit"] = true
+	live -= hit
 
 func loctate_nearest_tavern():
-	pass
+	var taverns = buildings.find_children("Tavern*", "Area3D",false)
+	var nearest_tavern = null
+	
+	for tavern in taverns:
+		if self.origin.distance_to(nearest_tavern.origin) > self.origin.distance_to(tavern.origin) or nearest_tavern == null:
+			nearest_tavern = tavern
+	return nearest_tavern
+
+func set_job(_job: String, _job_location: Area3D):
+	job = _job
+	job_location = _job_location
+	
+func set_home(_home_location: Area3D):
+	home_location = _home_location
+
+func get_hunger():
+	return hunger
+	
+func get_rest():
+	return rest

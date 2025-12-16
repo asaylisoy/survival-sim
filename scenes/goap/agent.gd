@@ -21,8 +21,6 @@ func _process(delta):
 		var blackboard = {
 			"position": _actor.position,
 			}
-		for s in WorldState._state:
-			blackboard[s] = WorldState._state[s]
 		# if not, requests the action planner a plan for new high priority goal
 		_current_goal = goal
 		_current_plan = Goap.get_action_planner().get_plan(_current_goal, blackboard)

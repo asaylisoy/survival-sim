@@ -20,14 +20,11 @@ extends PanelContainer
 @onready var castle =  preload("res://scenes/buildings/castle.tscn")
 @onready var tavern =  preload("res://scenes/buildings/tavern.tscn")
 
-@onready var villager =  preload("res://scenes/characters/villager_a.tscn")
-
 var camera
 var instance
 var placing = false
 var range = 1000
 var can_place = false
-var spawning = false
 
 
 func _ready() -> void:
@@ -72,15 +69,7 @@ func _process(delta: float) -> void:
 		
 		building_types.visible = true
 		
-	if spawning:
-		var spawn = buildings.get_node("Castle")
-		var ray_origin = spawn.origin
-		var ray_end = ray_origin * 10
-		var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
-		var collision = camera.get_world_3d().direct_space_state.intersect_ray(query)
-		if collision:
-			instance.transform.origin = collision.position
-			#can_spawn = instance.check_placement()
+
 		
 		
 func _unhandled_input(event: InputEvent) -> void:
@@ -92,7 +81,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_right_click"):
 		placing = false
 		can_place = false
-		instance.queue_free()
+		if(instance != null):
+			instance.queue_free()
 
 func _on_food_item_list_item_selected(index: int) -> void:
 	if placing:
@@ -194,13 +184,3 @@ func _on_type_item_list_item_selected(index: int) -> void:
 		4:
 			defensive_buildings.visible = true
 	types_item_list.deselect_all()
-
-
-func spawn_villager() -> void:
-	instance = villager.instantiate()
-	placing = true
-	buildings.add_child(instance)
-	
-	placing = false
-	can_place = false
-	instance.placed()

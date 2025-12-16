@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://ss3jtpj0ovma"]
+[gd_scene load_steps=31 format=3 uid="uid://ss3jtpj0ovma"]
 
 [ext_resource type="Script" uid="uid://dw6rd8e6b33s3" path="res://scenes/ui/main_menu.gd" id="1_b0pke"]
 [ext_resource type="Script" uid="uid://d4kaqbgrl0jwq" path="res://scenes/ui/pause_menu.gd" id="1_cukyy"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://ctvtn50avy6dl" path="res://Source/kenney_cursor-pack/PNG/Basic/Default/tool_bow.png" id="23_yprc8"]
 [ext_resource type="Texture2D" uid="uid://b03ytjhehtlo2" path="res://Source/kenney_cursor-pack/PNG/Basic/Default/tool_wrench.png" id="24_cukyy"]
 [ext_resource type="Texture2D" uid="uid://j6vb33vn40t" path="res://Source/kenney_cursor-pack/PNG/Basic/Default/tool_sword_b.png" id="25_b0pke"]
+[ext_resource type="Script" uid="uid://cdrmk6ynkcq4w" path="res://scenes/ui/resource_info.gd" id="30_0yl3y"]
 
 [node name="Strategy_UI" type="Control"]
 layout_mode = 3
@@ -40,6 +41,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Main_Menu" type="PanelContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -196,7 +198,6 @@ item_2/icon = ExtResource("7_7dk0x")
 item_3/icon = ExtResource("8_mc3d8")
 
 [node name="DefensiveBuildings" type="VBoxContainer" parent="BuildingMenu/MarginContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="BuildingMenu/MarginContainer/DefensiveBuildings"]
@@ -285,6 +286,68 @@ item_1/icon = ExtResource("22_f3sx6")
 item_2/icon = ExtResource("23_yprc8")
 item_3/icon = ExtResource("24_cukyy")
 item_4/icon = ExtResource("25_b0pke")
+
+[node name="Building Info" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Building Info"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Building Info/MarginContainer"]
+layout_mode = 2
+
+[node name="Building Type" type="Label" parent="Building Info/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Building Name"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Building Info/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Hitpoints" type="Label" parent="Building Info/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Building Info" type="RichTextLabel" parent="Building Info/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Building Information"
+fit_content = true
+
+[node name="Spawn Villager" type="Button" parent="Building Info/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Spawn Villager"
+
+[node name="Resource Info" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+script = ExtResource("30_0yl3y")
+
+[node name="MarginContainer" type="MarginContainer" parent="Resource Info"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Resource Info/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Resource Info/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="FoodAmount" type="Label" parent="Resource Info/MarginContainer/HBoxContainer"]
+layout_mode = 2
 
 [connection signal="pressed" from="Main_Menu/MarginContainer/VBoxContainer/Play Game" to="Main_Menu" method="_on_play_game_pressed"]
 [connection signal="pressed" from="Main_Menu/MarginContainer/VBoxContainer/Load Game" to="Main_Menu" method="_on_load_game_pressed"]

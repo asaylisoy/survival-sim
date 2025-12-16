@@ -29,3 +29,7 @@ target_position = Vector3(0, -0.1, 0)
 [node name="RayCast3D4" type="RayCast3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.1, -0.46)
 target_position = Vector3(0, -0.1, 0)
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

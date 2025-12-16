@@ -1,5 +1,6 @@
 extends Node
 
+class_name Goap
 # This class is an Autoload accessible globaly.
 # It initialises a GoapActionPlanner with the available
 # actions.

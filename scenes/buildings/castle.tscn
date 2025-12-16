@@ -43,31 +43,44 @@ target_position = Vector3(0, -0.1, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.1, 1.11)
 target_position = Vector3(0, -0.1, 0)
 
-[node name="Building Info Point" type="Control" parent="." index="9"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Building Info" type="PanelContainer" parent="." index="9"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Building Info Point" index="0"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Building_Type" type="Label" parent="Building Info Point/NinePatchRect" index="0"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Building Info Point/NinePatchRect" index="1"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Hitpoints" type="Label" parent="Building Info Point/NinePatchRect/HBoxContainer" index="0"]
+[node name="MarginContainer" type="MarginContainer" parent="Building Info" index="0"]
 layout_mode = 2
 
-[node name="Spawn_Villager" type="Button" parent="Building Info Point/NinePatchRect" index="2"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="VBoxContainer" type="VBoxContainer" parent="Building Info/MarginContainer" index="0"]
+layout_mode = 2
+
+[node name="Building Type" type="Label" parent="Building Info/MarginContainer/VBoxContainer" index="0"]
+layout_mode = 2
+text = "Building Name"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Building Info/MarginContainer/VBoxContainer" index="1"]
+layout_mode = 2
+
+[node name="Hitpoints" type="Label" parent="Building Info/MarginContainer/VBoxContainer/HBoxContainer" index="0"]
+layout_mode = 2
+
+[node name="Building Info" type="RichTextLabel" parent="Building Info/MarginContainer/VBoxContainer" index="2"]
+layout_mode = 2
+text = "Building Information"
+fit_content = true
+
+[node name="Spawn Villager" type="Button" parent="Building Info/MarginContainer/VBoxContainer" index="3"]
+layout_mode = 2
+text = "Spawn Villager"
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="Building Info/MarginContainer/VBoxContainer/Spawn Villager" to="." method="_on_spawn_villager_pressed"]

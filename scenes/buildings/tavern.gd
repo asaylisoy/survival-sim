@@ -6,7 +6,9 @@ extends Area3D
 
 @onready var green_mat = preload("res://scenes/buildings/placement_green.tres")
 @onready var red_mat = preload("res://scenes/buildings/placement_red.tres")
+@onready var highlight_mat = preload("res://scenes/buildings/highlight.tres")
 
+var chosen = false
 
 func check_placement() -> bool:
 	for ray in raycasts:
@@ -34,3 +36,29 @@ func placement_red() -> void:
 func placement_green() -> void:
 	for mesh in meshes:
 			mesh.material_override = green_mat
+
+
+func _on_mouse_entered() -> void:
+	if !chosen:
+		for mesh in meshes:
+			mesh.material_override = highlight_mat
+
+
+func _on_mouse_exited() -> void:
+	if !chosen:
+		for mesh in meshes:
+				mesh.material_override = null
+
+
+func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+	if (event is InputEventMouseButton and event.is_pressed() and event.is_action("ui_left_click")):
+		for mesh in meshes:
+			mesh.material_override = highlight_mat
+		chosen = true
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_right_click"):
+		for mesh in meshes:
+			mesh.material_override = null
+		chosen = false
