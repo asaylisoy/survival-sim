@@ -11,6 +11,7 @@ var speed
 var alive = true
 
 @onready var buildings = $"../../Buildings"
+@onready var right_hand = $"Rig_Medium/Skeleton3D/Right Hand"
 
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var nav_agent = $NavigationAgent3D
@@ -64,6 +65,13 @@ func update_animation_parameters():
 func get_hit(hit: int):
 	animation_tree["parameters/Villager_A/conditions/is_hit"] = true
 	live -= hit
+	
+func eat():
+	right_hand.plate_food_A2.visible = true
+	animation_tree["parameters/Villager_A/conditions/use_item"] = true
+	right_hand.plate_food_A2.visible = false
+	right_hand.plate_food_B2.visible = true
+	right_hand.plate_food_B2.visible = false
 
 func loctate_nearest_tavern():
 	var taverns = buildings.find_children("Tavern*", "Area3D",false)
