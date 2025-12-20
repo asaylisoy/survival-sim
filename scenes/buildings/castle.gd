@@ -4,9 +4,11 @@ extends Area3D
 @export var meshes : Array[MeshInstance3D]
 @onready var area = $Castle 
 
+@onready var villagers = $"../../Villagers"
+
+@onready var resource_info = $"../../Strategy_UI/Resource Info"
 @onready var building_info = $"Building Info"
 
-@onready var villagers = $"../../Villagers"
 
 @onready var green_mat = preload("res://scenes/buildings/placement_green.tres")
 @onready var red_mat = preload("res://scenes/buildings/placement_red.tres")
@@ -18,8 +20,6 @@ var villager_population : Array[CharacterBody3D]
 
 var chosen = false
 
-var villager_count = 0
-var villager_limit = 10
 var instance
 var spawning = false
 var can_spawn = false
@@ -58,18 +58,21 @@ func _on_mouse_entered() -> void:
 	if !chosen:
 		for mesh in meshes:
 			mesh.material_override = highlight_mat
+			building_info.visible = true
 
 
 func _on_mouse_exited() -> void:
 	if !chosen:
 		for mesh in meshes:
 				mesh.material_override = null
+				building_info.visible = false
 
 
 func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	if (event is InputEventMouseButton and event.is_pressed() and event.is_action("ui_left_click")):
 		for mesh in meshes:
 			mesh.material_override = highlight_mat
+			building_info.visible = true
 		chosen = true
 
 
@@ -77,11 +80,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_right_click"):
 		for mesh in meshes:
 			mesh.material_override = null
+			building_info.visible = false
 		chosen = false
 
 
 func _on_spawn_villager_pressed() -> void:
-	if villager_count < villager_limit:
+	if resource_info.get_villager_count() < resource_info.get_villager_limit():
 		var angle = randf_range(0, 2 * PI) # Get random angle (radians)
 		var offset = Vector3(cos(angle) * radius, 20, sin(angle) * radius)
 		
@@ -99,6 +103,10 @@ func _on_spawn_villager_pressed() -> void:
 		var result = space_state.intersect_ray(query)
 		
 		instance.transform.origin = result.position
-		villager_count += 1
+		var available_home = resource_info.get_available_home()
+		instance.set_home(available_home)
+		available_home.set_inhabitant(instance)
+		
+		resource_info.set_villager_count(resource_info.get_villager_count() + 1)
 	else:
 		print("Villager limit reached")

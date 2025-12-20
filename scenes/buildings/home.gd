@@ -4,6 +4,8 @@ extends Area3D
 @export var meshes : Array[MeshInstance3D]
 @onready var area = $Home 
 
+@onready var resource_info = $"../../Strategy_UI/Resource Info"
+
 @onready var green_mat = preload("res://scenes/buildings/placement_green.tres")
 @onready var red_mat = preload("res://scenes/buildings/placement_red.tres")
 @onready var highlight_mat = preload("res://scenes/buildings/highlight.tres")
@@ -11,8 +13,6 @@ extends Area3D
 var inhabitants : Array[CharacterBody3D] #the house should contain 4 villagers at max
 
 var chosen = false
-
-var living_spaces = [] #empty array for the villagers, who are living in this house
 
 func check_placement() -> bool:
 	for ray in raycasts:
@@ -30,6 +30,9 @@ func placed() -> void:
 		mesh.material_override = null
 	for ray in raycasts:
 		ray.queue_free()
+	inhabitants.resize(4)
+	resource_info.set_villager_limit(resource_info.get_villager_limit() + inhabitants.size())
+	resource_info.add_home(self)
 
 
 func placement_red() -> void:
@@ -65,3 +68,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		for mesh in meshes:
 			mesh.material_override = null
 		chosen = false
+		
+		
+func get_free_space():
+	for slot in inhabitants.size():
+		if inhabitants[slot] == null:
+			return slot
+			
+func set_inhabitant(_inhabitant):
+	var free_space = get_free_space()
+	if free_space != null:
+		inhabitants[free_space] = _inhabitant
+	else:
+		print("Fehler bei der Wohnungssuche")

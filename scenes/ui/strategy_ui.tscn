@@ -287,45 +287,6 @@ item_2/icon = ExtResource("23_yprc8")
 item_3/icon = ExtResource("24_cukyy")
 item_4/icon = ExtResource("25_b0pke")
 
-[node name="Building Info" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -20.0
-offset_bottom = 20.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Building Info"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Building Info/MarginContainer"]
-layout_mode = 2
-
-[node name="Building Type" type="Label" parent="Building Info/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Building Name"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Building Info/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Hitpoints" type="Label" parent="Building Info/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Building Info" type="RichTextLabel" parent="Building Info/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Building Information"
-fit_content = true
-
-[node name="Spawn Villager" type="Button" parent="Building Info/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Spawn Villager"
-
 [node name="Resource Info" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 5
@@ -347,6 +308,9 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="FoodAmount" type="Label" parent="Resource Info/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Villager" type="Label" parent="Resource Info/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
 [connection signal="pressed" from="Main_Menu/MarginContainer/VBoxContainer/Play Game" to="Main_Menu" method="_on_play_game_pressed"]
