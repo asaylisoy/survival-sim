@@ -7,15 +7,17 @@ var rest = 100 #shows the rested state of the villager. goes from 0 to 100
 var live = 100  #shows the livepoints of a villager. goes from 0 to 100
 var happyness = 100 #shows the happyness of a villager. goes from 0 to 100
 var hunger = 100 #shows the food saturation of the villager. goes from 0 to 100
-var speed
+var speed: float = 5.0
 var alive = true
 
 var chosen = false
 
 @onready var highlight_mat = preload("res://scenes/buildings/highlight.tres")
 
-@onready var world = $"../World"
-var current_path: PackedVector3Array = []
+@onready var world = $".."
+#our path array consist of hex coordinates, means current_path should be array filled with Vector2i's ((q,r) coordinates)
+var current_path: Array[Vector2i]
+var current_target_world_pos: Vector3
 
 
 @onready var arm_left = $"Rig_Medium/Skeleton3D/Mannequin_ArmLeft"
@@ -71,7 +73,43 @@ func _physics_process(delta: float) -> void:
 		animation_tree["parameters/Villager_A/conditions/is_dead"] = true
 		alive = false
 	else:
-		if current_path.is_empty():
+		#if there is no target position to walk towards
+		#there is nothing to do just return
+		if current_path.is_empty() and current_target_world_pos == Vector3.ZERO:
+			velocity = Vector3.ZERO
+			return
+			
+		#if the goal is reached pick up a new target
+		if global_position.distance_to(current_target_world_pos) < 0.2 or current_target_world_pos == Vector3.ZERO:
+			#check if the list is empty
+			if current_path.is_empty():
+				velocity = Vector3.ZERO
+				current_target_world_pos = Vector3.ZERO
+				return
+			
+			#if the list is not empty set up a new goal
+			var next_hex = current_path.pop_front()
+			var world_pos = world.hex_to_world(next_hex)
+			
+			if world.height_data.has(next_hex):
+				world_pos.y = world.height_data[next_hex]
+				
+			current_target_world_pos = world_pos
+			
+		if current_target_world_pos != Vector3.ZERO:
+			var direction = (current_target_world_pos - global_position).normalized()
+			var look_target = current_target_world_pos
+			look_target.y = global_position.y
+			look_at(look_target, Vector3.UP)
+			
+			velocity = direction * speed
+			move_and_slide()
+		
+		
+		
+		
+		
+		"""if current_path.is_empty():
 			pass
 		else:
 			var target_pos = current_path[0]	
@@ -82,7 +120,7 @@ func _physics_process(delta: float) -> void:
 				current_path.remove_at(0)
 				if current_path.is_empty():
 					velocity = Vector3.ZERO
-			move_and_slide()
+			move_and_slide()"""
 	
 '''
 func move_to(direction, delta):
@@ -94,9 +132,24 @@ func move_to(direction, delta):
 	move_and_collide(direction * delta * 100)
 '''	
 	
-func move_to_target(target_point_id: int):
-	var start_id = world.astar.get_closest_point(global_position)
-	current_path = world.astar.get_point_path(start_id, target_point_id)
+func move_to_hex(target_hex: Vector2i):
+	
+	var current_hex = world.world_to_hex(global_position)
+	#calculate the path
+	var new_path = world.get_hex_path(current_hex, target_hex)
+	
+	if new_path.size() > 0:
+		current_path = new_path
+		current_path.pop_front()
+		
+		current_target_world_pos = Vector3.ZERO
+	else:
+		print("No path!")
+	
+	
+	
+	#var start_id = world.astar.get_closest_point(global_position)
+	#current_path = world.astar.get_point_path(start_id, target_point_id)
 
 
 func update_animation_parameters():
@@ -159,9 +212,11 @@ func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, n
 		chosen = true
 
 
-func _unhandled_input(event: InputEvent) -> void:
+"""func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_right_click"):
 		for mesh in meshes:
 			mesh.material_override = null
 			villager_info.visible = false
-		chosen = false
+		chosen = false"""
+
+# --- TEST CODE ---

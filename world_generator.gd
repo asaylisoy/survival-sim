@@ -55,19 +55,21 @@ func setup_navigation():
 		
 		#only heights above water surface are walkable (height >= -4)
 		if height >= -4:
-			#produce unique ID's for every single coordinate
-			var point_id = get_id_from_coords(grid_pos)
 			
-			#calculate hex's 2D position in real world (x, z)
-			#AStar wants to know the positions in real world to determine which point is closer to target
-			#world_pos_3d keeps the real world position of each point
-			#and navigation_pos_2d takes only the x and z values since y makes no difference in position calculations
-			var world_pos_3d = hex_to_world_center(grid_pos)
-			var navigation_pos_2d = Vector2(world_pos_3d.x, world_pos_3d.z)
+			if not occupied_hexes.has(grid_pos):
+				#produce unique ID's for every single coordinate
+				var point_id = get_id_from_coords(grid_pos)
 			
-			#add every point to the system
-			#first parameter is ID and the second one is position
-			astar.add_point(point_id, navigation_pos_2d)
+				#calculate hex's 2D position in real world (x, z)
+				#AStar wants to know the positions in real world to determine which point is closer to target
+				#world_pos_3d keeps the real world position of each point
+				#and navigation_pos_2d takes only the x and z values since y makes no difference in position calculations
+				var world_pos_3d = hex_to_world(grid_pos)
+				var navigation_pos_2d = Vector2(world_pos_3d.x, world_pos_3d.z)
+			
+				#add every point to the system
+				#first parameter is ID and the second one is position
+				astar.add_point(point_id, navigation_pos_2d)
 	
 	
 	#get the list of IDs which was added to AStar 
@@ -113,7 +115,7 @@ func get_coords_from_id(id: int) -> Vector2i:
 	return Vector2i(q, r)
 
 
-func hex_to_world_center(hex: Vector2i) -> Vector3:
+func hex_to_world(hex: Vector2i) -> Vector3:
 	var q = hex.x
 	var r = hex.y
 	
@@ -122,6 +124,44 @@ func hex_to_world_center(hex: Vector2i) -> Vector3:
 	var z = hex_size * (3.0 / 2.0 * r)
 	
 	return Vector3(x, 0 , z)
+
+#converts 3D world position (x, z) to axial hex coordinates (q, r)
+#uses the inverse of the hex-to-pixel matrix for pointy-top hexes
+func world_to_hex(world_pos: Vector3) -> Vector2i:
+	#calculations for opposite of hex_to_world function by letting q and r alone
+	var r = (2.0/3 * world_pos.z) / hex_size
+	var q = (sqrt(3)/3 * world_pos.x - 1.0/3 * world_pos.z) / hex_size
+	
+	return cube_to_axial(cube_round(q, r, -q-r))
+
+#rounds fractional cube coordinates (float) to the nearest valid integer hex
+#ensures the q + r + s = 0 constraint is maintained after rounding
+func cube_round(frac_q, frac_r, frac_s) -> Vector3i:
+	var q = round(frac_q)
+	var r = round(frac_r)
+	var s = round(frac_s)
+	
+	var q_diff = abs(q - frac_q)
+	var r_diff = abs(r - frac_r)
+	var s_diff = abs(s - frac_s)
+	
+	#this part finds the coordinate with the largest rounding error and recalculates it
+	#from the other two to guarantee the sum equals 0
+	
+	#lets say inputs are: q=0.51, r=0.51, s=-1.02 (Sum is 0, correct)
+	#simple rounding gives: q=1, r=1, s=-1 (Sum is 1, wrong)
+	#calculate errors: q_diff=0.49, r_diff=0.49, s_diff=0.02
+	#largest error is in q (or r), lets say we pick q
+	#discard q, recalculate from others: q = -r - s => q = -1 - (-1) = 0
+	#result: q=0, r=1, s=-1 (Sum is 0, correct hex found
+
+	if q_diff > r_diff and q_diff > s_diff:
+		q = -r - s
+	elif r_diff > s_diff:
+		r = -q - s
+	else:
+		s = -q - r
+	return Vector3i(q, r, s)
 
 
 func get_hex_path(start_hex_coords: Vector2i, target_hex_coords: Vector2i) -> Array[Vector2i]:
@@ -175,7 +215,7 @@ var height_data = {}
 #var blacksmith_location: Vector2i
 #DICTIONARY -> KEEPS KEY-VALUE TUPLES
 var building_locations = {}
-#ARRAY
+#ARRAY to keep obstacles and they will be marked as unwalkable
 var occupied_hexes = []
 
 func _ready():
@@ -192,6 +232,7 @@ func _ready():
 	place_fixed_structures()#TODO
 	build_the_world()#TODO
 	print("hexagonal world generation completed")
+	setup_navigation()
 	
 func generate_world_data():
 	print("height data is being generated...")
@@ -229,6 +270,9 @@ func axial_to_cube(axial: Vector2i) -> Vector3i:
 	var r = axial.y
 	var s = - q - r
 	return Vector3i(q, r, s)
+
+func cube_to_axial(cube: Vector3i) -> Vector2i:
+	return Vector2i(cube.x, cube.y)
 
 func get_hex_area(center: Vector2i, radius) -> Array:
 	var hexes_found = []
@@ -329,6 +373,8 @@ func place_hex_tile(scene_to_place, grid_pos: Vector2i, custom_height = null):
 
 
 func build_the_world():
+	#clear at the beginning
+	occupied_hexes.clear()
 	
 	#a constant water level is determined, makes sense when it's equal to lowest grass' level
 	const WATER_LEVEL = -4.0
@@ -336,6 +382,9 @@ func build_the_world():
 	for scene_to_build in building_locations.keys():
 		var grid_pos = building_locations[scene_to_build]
 		place_hex_tile(scene_to_build, grid_pos)
+		
+		#append the buildings into occupied hexes
+		occupied_hexes.append(grid_pos)
 		
 		
 	for grid_pos in height_data.keys():
@@ -353,6 +402,9 @@ func build_the_world():
 					var trees = [TREES_SMALL_SCENE, TREES_MEDIUM_SCENE, TREES_LARGE_SCENE]
 					var random_tree = trees.pick_random()
 					place_hex_tile(random_tree, grid_pos)
+					#append the trees into occupied hexes
+					occupied_hexes.append(grid_pos)
+
 			else:
 				place_hex_tile(HEX_DIRT_SCENE, grid_pos)
 				var decoration_value = decoration_noise.get_noise_2d(grid_pos.x, grid_pos.y)
@@ -360,6 +412,9 @@ func build_the_world():
 					var mountains = [MOUNTAINA_SCENE, MOUNTAINB_SCENE, MOUNTAINC_SCENE]
 					var random_mountain = mountains.pick_random()
 					place_hex_tile(random_mountain, grid_pos)
+					#append the mountains into occupied hexes
+					occupied_hexes.append(grid_pos)
+
 	
 	
 	
