@@ -7,7 +7,7 @@ extends Area3D
 @onready var villagers = $"../../Villagers"
 
 @onready var resource_info = $"../../Strategy_UI/Resource Info"
-@onready var building_info = $"Building Info"
+@onready var building_info = $"Building Info" 
 
 
 @onready var green_mat = preload("res://scenes/buildings/placement_green.tres")
@@ -24,6 +24,9 @@ var instance
 var spawning = false
 var can_spawn = false
 var radius = 2
+
+func _ready() -> void:
+	building_info.visible = false
 
 func check_placement() -> bool:
 	for ray in raycasts:

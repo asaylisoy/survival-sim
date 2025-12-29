@@ -36,40 +36,53 @@ var current_path: PackedVector3Array = []
 @onready var hitpoints_label = $"Villager Info/MarginContainer/VBoxContainer/HBoxContainer/Hitpoints"
 @onready var rest_label = $"Villager Info/MarginContainer/VBoxContainer/Hunger"
 @onready var hunger_label = $"Villager Info/MarginContainer/VBoxContainer/Rest"
+@onready var condition_label = $"Villager Info/MarginContainer/VBoxContainer/Condition"
+
+@onready var resource_info = $"../../Strategy_UI/Resource Info"
 
 
-#func _ready() -> void:
-'''
+func _ready() -> void:
+	animation_tree.active = true
+	villager_info.visible = false
+	'''
 	var agent = GoapAgent.new()
 	#defines which goals are available for the villager
 	agent.init(self, [
 		KeepFedGoal.new()
 	])
 	add_child(agent)
-'''
+	'''
+
 	
 func _process(delta: float) -> void:
-	rest_label.text = str(rest)
-	hunger_label.text = str(hunger)
-	hitpoints_label.text = str(live)
+	rest_label.text = str(int (rest))
+	hunger_label.text = str(int (hunger))
+	hitpoints_label.text = str(int (live))
+	condition_label.text = str(animation_tree.get("parameters/Villager_A/playback").get_current_node())
+	
 
 func _physics_process(delta: float) -> void:
-	update_animation_parameters()
-	
 	if(alive):
+		var current_state = animation_tree.get("parameters/Villager_A/playback").get_current_node()
+		if current_state != "Villeger_Idle_A": 
+			if velocity.length() < 0.1:
+				animation_tree.set("parameters/Villager_A/conditions/idle", true)
 		if(rest > 0):
-			rest -= 1 * delta
+			rest -= 5 * delta
 		else:
-			get_hit(1)
+			get_hit(5 * delta)
 		
 		if(hunger > 0):
-			hunger -= 1 * delta
+			hunger -= 5 * delta
 		else:
-			get_hit(1 * delta)
-		
-	if(live <= 0):
-		animation_tree["parameters/Villager_A/conditions/is_dead"] = true
+			get_hit(5 * delta)
+	else:
+		pass
+	if(live <= 0 && alive):
+		reset_all_animation_conditions()
+		animation_tree.set("parameters/Villager_A/conditions/is_dead", true)
 		alive = false
+		resource_info.set_villager_count(resource_info.get_villager_count() - 1)
 	else:
 		if current_path.is_empty():
 			pass
@@ -98,19 +111,29 @@ func move_to_target(target_point_id: int):
 	var start_id = world.astar.get_closest_point(global_position)
 	current_path = world.astar.get_point_path(start_id, target_point_id)
 
+func reset_all_animation_conditions():
+	for property in animation_tree.get_property_list():
+		# AnimationTree parameters usually start with "parameters/conditions/"
+		if property.name.begins_with("parameters/Villager_A/conditions/"):
+			animation_tree.set(property.name, false)
 
 func update_animation_parameters():
-	if(velocity == Vector3.ZERO):
-		animation_tree["parameters/Villager_A/conditions/idle"] = true
+	if velocity.length() < 0.1:
+		reset_all_animation_conditions()
+		animation_tree.set("parameters/Villager_A/conditions/idle", true)
 		
 	
-func get_hit(hit: int):
-	animation_tree["parameters/Villager_A/conditions/is_hit"] = true
+func get_hit(hit: float):
+	reset_all_animation_conditions()
+	animation_tree.set("parameters/Villager_A/conditions/is_hit", true)
 	live -= hit
+	wait(1.2)
+	reset_all_animation_conditions()
 	
 func eat():
 	right_hand.plate_food_A2.visible = true
-	animation_tree["parameters/Villager_A/conditions/use_item"] = true
+	reset_all_animation_conditions()
+	animation_tree.set("parameters/Villager_A/conditions/use_item", true)
 	right_hand.plate_food_A2.visible = false
 	right_hand.plate_food_B2.visible = true
 	right_hand.plate_food_B2.visible = false
@@ -165,3 +188,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			mesh.material_override = null
 			villager_info.visible = false
 		chosen = false
+
+func wait(seconds: float) -> void:
+	await get_tree().create_timer(seconds).timeout

@@ -6,8 +6,8 @@ var villager_limit = 0
 
 var homes : Array[Area3D]
 
-@onready var food_amount_label = $"MarginContainer/HBoxContainer/FoodAmount"
-@onready var villager_label = $"MarginContainer/HBoxContainer/Villager"
+@onready var food_amount_label = $"MarginContainer/HBoxContainer/HBoxContainer/FoodAmount"
+@onready var villager_label = $"MarginContainer/HBoxContainer/HBoxContainer2/Villager"
 
 func _process(delta: float) -> void:
 	food_amount_label.text = str(food_amount)

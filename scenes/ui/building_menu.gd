@@ -47,7 +47,7 @@ func _process(delta: float) -> void:
 		var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
 		var collision = camera.get_world_3d().direct_space_state.intersect_ray(query)
 		if collision:
-			instance.transform.origin = collision.position # Invalid access to property or key 'transform' on a base object of type 'previously freed'. , wenn die Kamera beim platzieren bewegt wird
+			instance.global_position = collision.position # Invalid access to property or key 'transform' on a base object of type 'previously freed'. , wenn die Kamera beim platzieren bewegt wird
 			can_place = instance.check_placement()
 		
 	if Input.is_action_just_pressed("ui_right_click"):
@@ -77,6 +77,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		placing = false
 		can_place = false
 		instance.placed()
+		instance = null
+		
 		
 	if event.is_action_pressed("ui_right_click"):
 		placing = false
