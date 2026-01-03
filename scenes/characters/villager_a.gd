@@ -240,13 +240,59 @@ func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, n
 		for mesh in meshes:
 			mesh.material_override = null
 			villager_info.visible = false
-<<<<<<< HEAD
-		chosen = false
+
+		chosen = false"""
 
 func wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
-=======
-		chosen = false"""
 
-# --- TEST CODE ---
->>>>>>> 4c88c4720d2dd0a95a119f1dc4a981c84ac4a2dc
+
+#handles player input that has not been consumed/used by GUI elem,ents
+#used for 3D world interactions like unit movement commands
+func _unhandled_input(event: InputEvent) -> void:
+	
+	#ensure its a mouse click and trigger when pressed down and must be a left click and only allows 
+	#movement when a specific villager is currently selected
+	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and chosen:
+		
+		#---SETUP CAMERA & MOUSE
+		#we need the active 3D camera from the game screen to project a ray
+		var camera = get_viewport().get_camera_3d()
+		#event.position is the 2D pixel coordinate on our monitor e.g., X:960, Y: 540
+		var mouse_pos = event.position
+		
+		#---CALCULATE RAY ORIGIN & DIRECTION---
+		#since the screen is 2D and the world is 3D, we must project a ray
+		
+		#'project_ray_origin': the starting point
+		#if we shoot a laser from the camera, exactly where on the camera lens does it start?
+		var ray_origin = camera.project_ray_origin(mouse_pos)
+		#'project_ray_normal': the direction/angle
+		#if the laser passes through this specific pixel on the screen, what angel does it fly into the 3D world?
+		var ray_normal = camera.project_ray_normal(mouse_pos)
+		
+		#we extend the laser 1000 meters forward to ensure it reaches the ground
+		var ray_end = ray_origin + (ray_normal * 1000)
+		
+		#we pack the start and end points into a query object to ask the physics engine
+		var ray_query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+		
+		#direct_space_state: the brain of the physics engine that knows where every object is
+		#required to query the physics engine instantly
+		var space_state = get_world_3d().direct_space_state
+		
+		#the physics engine checks if this line hits any CollisionObject
+		#returns a dictionary with hit info (collider, position, normal) or empty if nothing hit
+		var ray_result = space_state.intersect_ray(ray_query)
+		
+		#checks if the dictionary is not empty
+		if ray_result:
+			
+			#position is the exact Vector3 point where the ray hit the ground
+			var hit_position = ray_result.position
+			
+			#converts the 3D world position to our hex grid coordinates (q, r)
+			var target_hex = world.world_to_hex(hit_position)
+			
+			#send the movement command to the villager
+			move_to_hex(target_hex)

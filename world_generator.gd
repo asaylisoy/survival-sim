@@ -2,7 +2,7 @@ extends Node3D
 
 #artik bir kare degil, merkezden yayilan bir petek yapisi var
 #bu sayi, en merkezden en distaki petege kadar kac petek olacagini belirler
-@export var world_radius: int = 50
+@export var world_radius: int = 100
 #tile_size yerine hex_size kullaniyoruz
 #bu, altigen modelinin merkezinden sivri tepesine kadar olan uzakligidir
 @export var hex_size: float = 1.0
