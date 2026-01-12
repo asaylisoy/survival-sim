@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://da7f23vb5dqsx"]
+[gd_scene load_steps=4 format=3 uid="uid://da7f23vb5dqsx"]
 
+[ext_resource type="Script" uid="uid://c4csiuouf7vhr" path="res://ResourceNode.gd" id="1_myaib"]
 [ext_resource type="PackedScene" uid="uid://hhx5wpkk3o11" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/mountain_B.gltf" id="1_v53pu"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_myaib"]
@@ -7,6 +8,7 @@ height = 1.7236938
 radius = 0.9555664
 
 [node name="mountainB" type="Node3D"]
+script = ExtResource("1_myaib")
 
 [node name="mountain_B2" parent="." instance=ExtResource("1_v53pu")]
 

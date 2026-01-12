@@ -19,6 +19,7 @@ var chosen = false
 var current_path: Array[Vector2i]
 var current_target_world_pos: Vector3
 
+var current_resource: Node = null
 
 @onready var arm_left = $"Rig_Medium/Skeleton3D/Mannequin_ArmLeft"
 @onready var arm_right = $"Rig_Medium/Skeleton3D/Mannequin_ArmRight"
@@ -158,11 +159,42 @@ func move_to_hex(target_hex: Vector2i):
 		current_target_world_pos = Vector3.ZERO
 	else:
 		print("No path!")
+
+func set_target_resource(resource):
+	var position = world.world_to_hex(resource.global_position)
+	var target_hex = find_best_neighbor_hex(resource)
 	
+	if target_hex != Vector2i.ZERO:
+		current_resource = resource
+		move_to_hex(target_hex)
+	else:
+		print("Resource is not reachable")
+
+#helper function for determining the closest neighboring hex
+#for the function set_target_resource
+func find_best_neighbor_hex(resource_hex: Vector2i) -> Vector2i:
+	var neighbors = world.get_neighbors(resource_hex.x, resource_hex.y)
+	var best_hex = Vector2i.ZERO#we will keep the best candidate here
+	var min_distance = 9999999#we give a big number at the beginning for later comparisons
+	var found_valid = false
 	
+	for neighbor in neighbors:
+		var point_id = world.get_id_from_coords(neighbor)
+		
+		if world.astar_has_point(point_id):
+			var neighbor_world_pos = world.hex_to_world_center(neighbor)
+			var dist = global_position.distance_to(neighbor_world_pos)
+			
+			if dist < min_distance:
+				min_distance = dist
+				best_hex = neighbor
+				found_valid = true
 	
-	#var start_id = world.astar.get_closest_point(global_position)
-	#current_path = world.astar.get_point_path(start_id, target_point_id)
+	if found_valid:
+		return best_hex
+	else:
+		print("Resource is not reachable")
+		return Vector2i.ZERO
 
 func reset_all_animation_conditions():
 	for property in animation_tree.get_property_list():
@@ -288,11 +320,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		#checks if the dictionary is not empty
 		if ray_result:
 			
-			#position is the exact Vector3 point where the ray hit the ground
-			var hit_position = ray_result.position
-			
-			#converts the 3D world position to our hex grid coordinates (q, r)
-			var target_hex = world.world_to_hex(hit_position)
-			
-			#send the movement command to the villager
-			move_to_hex(target_hex)
+			var collider = ray_result.collider
+			if collider is ResourceNode:
+				set_target_resource(collider)
+			else:
+				
+				#position is the exact Vector3 point where the ray hit the ground
+				var hit_position = ray_result.position
+				
+				#converts the 3D world position to our hex grid coordinates (q, r)
+				var target_hex = world.world_to_hex(hit_position)
+				
+				#send the movement command to the villager
+				move_to_hex(target_hex)

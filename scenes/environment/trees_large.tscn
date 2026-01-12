@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxgp3iwit0udw"]
+[gd_scene load_steps=4 format=3 uid="uid://bxgp3iwit0udw"]
 
 [ext_resource type="PackedScene" uid="uid://caoyfq43osugj" path="res://Source/KayKit_Medieval_Hexagon_Pack_1.0_FREE/Assets/gltf/decoration/nature/trees_A_large.gltf" id="1_7bhla"]
+[ext_resource type="Script" uid="uid://c4csiuouf7vhr" path="res://ResourceNode.gd" id="1_65p5o"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_65p5o"]
 height = 0.87820435
 radius = 1.0009766
 
 [node name="trees_large" type="Node3D"]
+script = ExtResource("1_65p5o")
 
 [node name="trees_A_large2" parent="." instance=ExtResource("1_7bhla")]
 
