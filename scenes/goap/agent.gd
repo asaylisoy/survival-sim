@@ -5,8 +5,8 @@ class_name GoapAgent
 # In your implementation you could have this logic
 # inside your NPC script.
 var _goals
-var _current_goal
-var _current_plan
+var _current_goal = null
+var _current_plan : Array
 var _current_plan_step = 0
 var _actor
 
@@ -19,11 +19,11 @@ func _process(delta):
 	# when calculating action costs and status. I'm not sure here is the best
 	# place to leave it, but I kept here to keep things simple.
 		var blackboard = {
-			"position": _actor.position,
+			"position": _actor.position
 			}
 		# if not, requests the action planner a plan for new high priority goal
 		_current_goal = goal
-		_current_plan = Goap.get_action_planner().get_plan(_current_goal, blackboard)
+		_current_plan = Goap.new().get_action_planner().get_plan(_current_goal, blackboard)
 		_current_plan_step = 0
 	else:
 		_follow_plan(_current_plan, delta)
@@ -40,7 +40,7 @@ func _get_best_goal():
 	var highest_priority
 
 	for goal in _goals:
-		if goal.is_valid() and (highest_priority == null or goal.priority() > highest_priority.priority()):
+		if goal.is_valid(_actor) and (highest_priority == null or goal.priority(_actor) > highest_priority.priority(_actor)):
 			highest_priority = goal
 	return highest_priority
 

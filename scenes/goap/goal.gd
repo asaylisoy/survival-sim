@@ -4,12 +4,12 @@ class_name GoapGoal
 
 # variable if the goal should be considered or not.
 # i.e. Ignore combat related goals when there are not enemies nearby.
-func is_valid() -> bool:
+func is_valid(actor) -> bool:
 	return true
 
 # Returns the goals priority. This priority can be dynamic. Check
 # `./goals/keep_fed.gd` for an example of dynamic priority.
-func priority() -> int:
+func priority(actor) -> int:
 	return 1
 
 # Plan's desired state. This is usually referred as desired world

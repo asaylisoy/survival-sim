@@ -7,6 +7,9 @@ class_name GoToTavernAction
 
 var nearest_tavern
 
+
+func get_clazz(): return "GoToTavernAction"
+
 #This indicates if the action should be considered or not.
 func is_valid() -> bool:
 	if (resource_info.get_food_amount() > 0):
@@ -20,7 +23,7 @@ func is_valid() -> bool:
 func get_cost(actor) -> int:
 	nearest_tavern = actor.loctate_nearest_tavern()
 	
-	return actor.origin.distance_to(nearest_tavern.origin)
+	return actor.get_distance(nearest_tavern)
 
 
 # Action requirements.
@@ -42,5 +45,5 @@ func perform(actor, delta) -> bool:
 	if resource_info.get_food_amount() == 0:
 		return false
 	else:
-		actor.move_to(actor.position.direction_to(nearest_tavern.position), delta)
+		actor.set_target_resource(nearest_tavern)
 		return false

@@ -1,4 +1,10 @@
-extends Node
+extends GoapAction
+
+class_name GoHomeAction
+
+
+func get_clazz(): return "GoHomeAction"
+
 # This indicates if the action should be considered or not.
 func is_valid() -> bool:
 	return true

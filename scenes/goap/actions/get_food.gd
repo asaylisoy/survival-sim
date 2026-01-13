@@ -1,4 +1,9 @@
-extends Node
+extends GoapAction
+
+class_name GetFoodAction
+
+
+func get_clazz(): return "GetFoodAction"
 
 # This indicates if the action should be considered or not.
 func is_valid() -> bool:

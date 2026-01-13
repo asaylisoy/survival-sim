@@ -7,14 +7,14 @@ var rest = 100 #shows the rested state of the villager. goes from 0 to 100
 var live = 100  #shows the livepoints of a villager. goes from 0 to 100
 var happyness = 100 #shows the happyness of a villager. goes from 0 to 100
 var hunger = 100 #shows the food saturation of the villager. goes from 0 to 100
-var speed: float = 5.0
+var speed: float = 2.0
 var alive = true
 
 var chosen = false
 
 @onready var highlight_mat = preload("res://scenes/buildings/highlight.tres")
 
-@onready var world = $".."
+@onready var world = $"../.."
 #our path array consist of hex coordinates, means current_path should be array filled with Vector2i's ((q,r) coordinates)
 var current_path: Array[Vector2i]
 var current_target_world_pos: Vector3
@@ -47,14 +47,14 @@ var current_resource: Node = null
 func _ready() -> void:
 	animation_tree.active = true
 	villager_info.visible = false
-	'''
+
 	var agent = GoapAgent.new()
 	#defines which goals are available for the villager
 	agent.init(self, [
 		KeepFedGoal.new()
 	])
 	add_child(agent)
-	'''
+
 
 	
 func _process(delta: float) -> void:
@@ -226,11 +226,27 @@ func eat():
 func loctate_nearest_tavern():
 	var taverns = buildings.find_children("Tavern*", "Area3D",false)
 	var nearest_tavern = null
+	var path = null
+	var new_path = null
+	
+	var current_hex = world.world_to_hex(global_position)
+	var target_hex = null
+	#calculate the path
 	
 	for tavern in taverns:
-		if self.origin.distance_to(nearest_tavern.origin) > self.origin.distance_to(tavern.origin) or nearest_tavern == null:
+		target_hex = world.world_to_hex(tavern.global_position)
+		new_path = world.get_hex_path(current_hex, target_hex)
+		if path.length() > new_path.length() or path == null:
 			nearest_tavern = tavern
 	return nearest_tavern
+	
+func get_distance(object):
+	var current_hex = world.world_to_hex(global_position)
+	var target_hex = world.world_to_hex(object.global_position)
+	var path = world.get_hex_path(current_hex, target_hex)
+	
+	return path.length()
+	
 
 func set_job(_job: String, _job_location: Area3D):
 	job = _job
