@@ -1,12 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://dx61o702i8q42"]
+[gd_scene load_steps=10 format=3 uid="uid://dx61o702i8q42"]
 
 [ext_resource type="Script" uid="uid://8xu3arfv8fjy" path="res://world_generator.gd" id="1_mc2jv"]
 [ext_resource type="Script" uid="uid://e1liptxr06ix" path="res://camera_position.gd" id="1_wjb0r"]
 [ext_resource type="PackedScene" uid="uid://ss3jtpj0ovma" path="res://scenes/ui/strategy_ui.tscn" id="2_aqk2v"]
+[ext_resource type="Texture2D" uid="uid://co1rjfrc05mi6" path="res://scenes/buildings/sky_14_2k.png" id="4_aqk2v"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fj7yv"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_tlwt5"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_aqk2v"]
+panorama = ExtResource("4_aqk2v")
+
+[sub_resource type="Sky" id="Sky_aqk2v"]
+sky_material = SubResource("PanoramaSkyMaterial_aqk2v")
+
+[sub_resource type="Environment" id="Environment_036b0"]
+background_mode = 2
+sky = SubResource("Sky_aqk2v")
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_mc2jv")
@@ -37,3 +48,6 @@ transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.7660
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, -15.825035, 53.562553, -8.6625595)
 shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_036b0")
