@@ -1,11 +1,11 @@
 extends GoapAction
 
-class_name BuildFirepitAction
+class_name BuildBuildingAction
 
-const Firepit = preload("res://scenes/firepit.tscn")
+#const Firepit = preload("res://scenes/firepit.tscn")
 
 
-func get_clazz(): return "BuildFirepitAction"
+func get_clazz(): return "BuildBuildingAction"
 
 
 func get_cost(_blackboard) -> int:

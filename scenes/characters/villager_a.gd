@@ -9,6 +9,7 @@ var happyness = 100 #shows the happyness of a villager. goes from 0 to 100
 var hunger = 100 #shows the food saturation of the villager. goes from 0 to 100
 var speed: float = 2.0
 var alive = true
+var is_hungry = false
 
 var chosen = false
 
@@ -39,6 +40,7 @@ var current_resource: Node = null
 @onready var hitpoints_label = $"Villager Info/MarginContainer/VBoxContainer/HBoxContainer/Hitpoints"
 @onready var rest_label = $"Villager Info/MarginContainer/VBoxContainer/Hunger"
 @onready var hunger_label = $"Villager Info/MarginContainer/VBoxContainer/Rest"
+@onready var home_label = $"Villager Info/MarginContainer/VBoxContainer/Home"
 @onready var condition_label = $"Villager Info/MarginContainer/VBoxContainer/Condition"
 
 @onready var resource_info = $"../../Strategy_UI/Resource Info"
@@ -61,6 +63,7 @@ func _process(delta: float) -> void:
 	rest_label.text = str(int (rest))
 	hunger_label.text = str(int (hunger))
 	hitpoints_label.text = str(int (live))
+	home_label.text = str(home_location)
 	condition_label.text = str(animation_tree.get("parameters/Villager_A/playback").get_current_node())
 	
 
@@ -70,6 +73,9 @@ func _physics_process(delta: float) -> void:
 		if current_state != "Villeger_Idle_A": 
 			if velocity.length() < 0.1:
 				animation_tree.set("parameters/Villager_A/conditions/idle", true)
+		if(hunger > 50):
+			is_hungry = true
+		
 		if(rest > 0):
 			rest -= 5 * delta
 		else:
@@ -162,7 +168,7 @@ func move_to_hex(target_hex: Vector2i):
 
 func set_target_resource(resource):
 	var position = world.world_to_hex(resource.global_position)
-	var target_hex = find_best_neighbor_hex(resource)
+	var target_hex = find_best_neighbor_hex(position)
 	
 	if target_hex != Vector2i.ZERO:
 		current_resource = resource
@@ -222,9 +228,11 @@ func eat():
 	right_hand.plate_food_A2.visible = false
 	right_hand.plate_food_B2.visible = true
 	right_hand.plate_food_B2.visible = false
+	hunger = 100
 
-func loctate_nearest_tavern():
-	var taverns = buildings.find_children("Tavern*", "Area3D",false)
+func locate_nearest_tavern():
+	var taverns = get_tree().get_nodes_in_group("taverns")
+	print("Taverns:")
 	var nearest_tavern = null
 	var path = null
 	var new_path = null
@@ -234,9 +242,10 @@ func loctate_nearest_tavern():
 	#calculate the path
 	
 	for tavern in taverns:
+		print(str(tavern))
 		target_hex = world.world_to_hex(tavern.global_position)
 		new_path = world.get_hex_path(current_hex, target_hex)
-		if path.length() > new_path.length() or path == null:
+		if path == null or path.size() > new_path.size():
 			nearest_tavern = tavern
 	return nearest_tavern
 	
@@ -245,7 +254,7 @@ func get_distance(object):
 	var target_hex = world.world_to_hex(object.global_position)
 	var path = world.get_hex_path(current_hex, target_hex)
 	
-	return path.length()
+	return path.size()
 	
 
 func set_job(_job: String, _job_location: Area3D):

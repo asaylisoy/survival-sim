@@ -23,7 +23,7 @@ func get_preconditions() -> Dictionary:
 
 # What conditions this action satisfies
 func get_effects() -> Dictionary:
-	return {}
+	return {"is_hungry": false}
 
 
 # Action implementation called on every loop.

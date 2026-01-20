@@ -19,11 +19,13 @@ func _process(delta):
 	# when calculating action costs and status. I'm not sure here is the best
 	# place to leave it, but I kept here to keep things simple.
 		var blackboard = {
-			"position": _actor.position
+			"position": _actor.position,
+			"actor": _actor,
+			"is_hungry": _actor.is_hungry
 			}
 		# if not, requests the action planner a plan for new high priority goal
 		_current_goal = goal
-		_current_plan = Goap.new().get_action_planner().get_plan(_current_goal, blackboard)
+		_current_plan = Goap.get_action_planner().get_plan(_current_goal, blackboard)
 		_current_plan_step = 0
 	else:
 		_follow_plan(_current_plan, delta)

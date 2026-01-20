@@ -1,6 +1,5 @@
 extends Node
 
-class_name Goap
 # This class is an Autoload accessible globaly.
 # It initialises a GoapActionPlanner with the available
 # actions.
@@ -20,6 +19,7 @@ func _ready():
 		GetFoodAction.new(),
 		GoToTavernAction.new()
 	])
+	print("Action Planner initialisiert")
 
 
 func get_action_planner() -> GoapActionPlanner:

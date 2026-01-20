@@ -12,9 +12,18 @@ func set_actions(actions: Array):
 # Receives a Goal and an optional blackboard.
 # Returns a list of actions to be executed.
 func get_plan(goal: GoapGoal, blackboard = {}) -> Array:
+	#Falls goal null ist, bricht die function ab
+	if goal == null:
+		print("Planner: No goal provided!")
+		return []
+	
 	print("Goal: %s" % goal.get_clazz())
 	var desired_state = goal.get_desired_state().duplicate()
-
+	print("Desired State: %s" %desired_state)
+	print("Blackboard: %s" %blackboard)
+	print("Actions: ")
+	for action in _actions:
+		print(str(action))
 	if desired_state.is_empty():
 		return []
 	return _find_best_plan(goal, desired_state, blackboard)
@@ -31,8 +40,9 @@ func _find_best_plan(goal, desired_state, blackboard):
   # In case it doesn't find a valid path, it will return false.
 	if _build_plans(root, blackboard.duplicate()):
 		var plans = _transform_tree_into_array(root, blackboard)
+		print("Cheapest Plan: %s" % plans)
 		return _get_cheapest_plan(plans)
-
+	print("Cheapest Plan: Not found")
 	return []
 
 # Compares plan's cost and returns

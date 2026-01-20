@@ -40,7 +40,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if placing:
+	if placing and is_instance_valid(instance):
 		var mouse_pos = get_viewport().get_mouse_position() #mouseposition on the screen
 		var ray_origin = camera.project_ray_origin(mouse_pos)
 		var ray_end = ray_origin + camera.project_ray_normal(mouse_pos) * range
@@ -102,6 +102,7 @@ func _on_food_item_list_item_selected(index: int) -> void:
 			pass
 		5:
 			instance = tavern.instantiate()
+			instance.add_to_group("taverns")
 	food_item_list.deselect_all()
 	placing = true
 	buildings.add_child(instance)
