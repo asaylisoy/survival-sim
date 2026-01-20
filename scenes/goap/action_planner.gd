@@ -14,7 +14,7 @@ func set_actions(actions: Array):
 func get_plan(goal: GoapGoal, blackboard = {}) -> Array:
 	#Falls goal null ist, bricht die function ab
 	if goal == null:
-		print("Planner: No goal provided!")
+		#print("Planner: No goal provided!")
 		return []
 	
 	print("Goal: %s" % goal.get_clazz())

@@ -10,6 +10,7 @@ var hunger = 100 #shows the food saturation of the villager. goes from 0 to 100
 var speed: float = 2.0
 var alive = true
 var is_hungry = false
+var is_sleepy = false
 
 var chosen = false
 
@@ -22,6 +23,7 @@ var current_target_world_pos: Vector3
 
 var current_resource: Node = null
 
+@onready var rig_medium = $"Rig_Medium"
 @onready var arm_left = $"Rig_Medium/Skeleton3D/Mannequin_ArmLeft"
 @onready var arm_right = $"Rig_Medium/Skeleton3D/Mannequin_ArmRight"
 @onready var body = $"Rig_Medium/Skeleton3D/Mannequin_Body"
@@ -29,6 +31,8 @@ var current_resource: Node = null
 @onready var leg_left = $"Rig_Medium/Skeleton3D/Mannequin_LegLeft"
 @onready var leg_right = $"Rig_Medium/Skeleton3D/Mannequin_LegRight"
 @onready var meshes = [arm_left, arm_right, body, head, leg_left, leg_right]
+@onready var plate_food_A2 = $"Rig_Medium/Skeleton3D/Right Hand/plate_food_A2"
+@onready var plate_food_B2 = $"Rig_Medium/Skeleton3D/Right Hand/plate_food_B2"
 
 @onready var buildings = $"../../Buildings"
 @onready var right_hand = $"Rig_Medium/Skeleton3D/Right Hand"
@@ -53,7 +57,8 @@ func _ready() -> void:
 	var agent = GoapAgent.new()
 	#defines which goals are available for the villager
 	agent.init(self, [
-		KeepFedGoal.new()
+		KeepFedGoal.new(),
+		KeepRestGoal.new()
 	])
 	add_child(agent)
 
@@ -75,16 +80,19 @@ func _physics_process(delta: float) -> void:
 				animation_tree.set("parameters/Villager_A/conditions/idle", true)
 		if(hunger > 50):
 			is_hungry = true
+			
+		if(rest > 50):
+			is_sleepy = true
 		
 		if(rest > 0):
-			rest -= 5 * delta
+			rest -= 1 * delta
 		else:
-			get_hit(5 * delta)
+			get_hit(1 * delta)
 		
 		if(hunger > 0):
-			hunger -= 5 * delta
+			hunger -= 2 * delta
 		else:
-			get_hit(5 * delta)
+			get_hit(1 * delta)
 	else:
 		pass
 	if(live <= 0 && alive):
@@ -187,8 +195,8 @@ func find_best_neighbor_hex(resource_hex: Vector2i) -> Vector2i:
 	for neighbor in neighbors:
 		var point_id = world.get_id_from_coords(neighbor)
 		
-		if world.astar_has_point(point_id):
-			var neighbor_world_pos = world.hex_to_world_center(neighbor)
+		if world.astar.has_point(point_id):
+			var neighbor_world_pos = world.hex_to_world(neighbor)
 			var dist = global_position.distance_to(neighbor_world_pos)
 			
 			if dist < min_distance:
@@ -222,17 +230,25 @@ func get_hit(hit: float):
 	reset_all_animation_conditions()
 	
 func eat():
-	right_hand.plate_food_A2.visible = true
+	plate_food_A2.visible = true
 	reset_all_animation_conditions()
 	animation_tree.set("parameters/Villager_A/conditions/use_item", true)
-	right_hand.plate_food_A2.visible = false
-	right_hand.plate_food_B2.visible = true
-	right_hand.plate_food_B2.visible = false
+	plate_food_A2.visible = false
+	plate_food_B2.visible = true
+	plate_food_B2.visible = false
+	reset_all_animation_conditions()
 	hunger = 100
+	is_hungry = false
+	
+func sleep():
+	rig_medium.visible = false
+	rest = 100
+	is_sleepy = false
+	rig_medium.visible = true
 
 func locate_nearest_tavern():
 	var taverns = get_tree().get_nodes_in_group("taverns")
-	print("Taverns:")
+	#print("Taverns:" + str(taverns))
 	var nearest_tavern = null
 	var path = null
 	var new_path = null
@@ -242,11 +258,12 @@ func locate_nearest_tavern():
 	#calculate the path
 	
 	for tavern in taverns:
-		print(str(tavern))
 		target_hex = world.world_to_hex(tavern.global_position)
 		new_path = world.get_hex_path(current_hex, target_hex)
+		print("Path Size: " + str(new_path.size()))
 		if path == null or path.size() > new_path.size():
 			nearest_tavern = tavern
+			print("Nearest Tavern: " + str(nearest_tavern))
 	return nearest_tavern
 	
 func get_distance(object):
@@ -263,6 +280,9 @@ func set_job(_job: String, _job_location: Area3D):
 	
 func set_home(_home_location: Area3D):
 	home_location = _home_location
+
+func get_home():
+	return home_location
 
 func get_hunger():
 	return hunger

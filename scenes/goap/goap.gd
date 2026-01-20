@@ -17,7 +17,9 @@ var _action_planner =  GoapActionPlanner.new()
 func _ready():
 	_action_planner.set_actions([
 		GetFoodAction.new(),
-		GoToTavernAction.new()
+		GoToTavernAction.new(),
+		SleepAction.new(),
+		GoHomeAction.new()
 	])
 	print("Action Planner initialisiert")
 

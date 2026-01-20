@@ -21,7 +21,9 @@ func _process(delta):
 		var blackboard = {
 			"position": _actor.position,
 			"actor": _actor,
-			"is_hungry": _actor.is_hungry
+			"is_hungry": _actor.is_hungry,
+			"is_sleepy": _actor.is_sleepy,
+			"home_location": _actor.home_location
 			}
 		# if not, requests the action planner a plan for new high priority goal
 		_current_goal = goal

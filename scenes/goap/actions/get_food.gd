@@ -34,4 +34,4 @@ func get_effects() -> Dictionary:
 func perform(actor, delta) -> bool:
 	actor.eat()
 	
-	return false
+	return true

@@ -55,8 +55,9 @@ func perform(actor, delta) -> bool:
 			nearest_tavern = actor.locate_nearest_tavern()
 			actor.set_target_resource(nearest_tavern)
 			var distance = actor.global_position.distance_to(nearest_tavern.global_position)
-			if distance < 10:
+			if distance > 5:
+				#print("Laufe zur Taverne")
+				return false
+			else:
 				print("Angekommen in der Taverne!")
 				return true
-			return true
-	return false
