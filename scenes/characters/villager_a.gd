@@ -263,6 +263,7 @@ func locate_nearest_tavern():
 		print("Path Size: " + str(new_path.size()))
 		if path == null or path.size() > new_path.size():
 			nearest_tavern = tavern
+			path = new_path
 			print("Nearest Tavern: " + str(nearest_tavern))
 	return nearest_tavern
 	
