@@ -7,13 +7,12 @@
 height = 1.7236938
 radius = 0.9555664
 
-[node name="mountainB" type="Node3D"]
+[node name="mountainB" type="StaticBody3D"]
 script = ExtResource("1_myaib")
+resource_type = "STONE"
 
 [node name="mountain_B2" parent="." instance=ExtResource("1_v53pu")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86257935, 0)
 shape = SubResource("CylinderShape3D_myaib")

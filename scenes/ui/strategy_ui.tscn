@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://ss3jtpj0ovma"]
+[gd_scene load_steps=35 format=3 uid="uid://ss3jtpj0ovma"]
 
 [ext_resource type="Script" uid="uid://dw6rd8e6b33s3" path="res://scenes/ui/main_menu.gd" id="1_b0pke"]
 [ext_resource type="Script" uid="uid://d4kaqbgrl0jwq" path="res://scenes/ui/pause_menu.gd" id="1_cukyy"]
@@ -33,14 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://cks2ptl2akver" path="res://Source/icon_pngs/plate_food_A.png" id="31_xcqfi"]
 [ext_resource type="Texture2D" uid="uid://dfdw7ufso1vhy" path="res://Source/icon_pngs/Rig_Medium_General.png" id="32_ujfxj"]
 [ext_resource type="Texture2D" uid="uid://dng6qehbe028y" path="res://Source/icon_pngs/Wood_Log_B.png" id="33_nmaa6"]
-[ext_resource type="Texture2D" uid="uid://d2vueytpwstwn" path="res://Source/icon_pngs/Wood_Plank_C.png" id="34_7keml"]
 [ext_resource type="Texture2D" uid="uid://chny8vl56wae8" path="res://Source/icon_pngs/Stone_Chunks_Small.png" id="35_or83b"]
-[ext_resource type="Texture2D" uid="uid://bgxa5trcsrt8a" path="res://Source/icon_pngs/Stone_Brick.png" id="36_1qn0f"]
-[ext_resource type="Texture2D" uid="uid://btoxg4tm775yv" path="res://Source/icon_pngs/Iron_Nuggets.png" id="37_ocmyg"]
-[ext_resource type="Texture2D" uid="uid://crl5wbf6wk5ti" path="res://Source/icon_pngs/Iron_Bar.png" id="38_0k2gm"]
-[ext_resource type="Texture2D" uid="uid://d108ale647c3n" path="res://Source/icon_pngs/Gold_Nuggets.png" id="39_l5pvp"]
-[ext_resource type="Texture2D" uid="uid://da4c7q68dcn74" path="res://Source/icon_pngs/Gold_Bar.png" id="40_vrogo"]
-[ext_resource type="Texture2D" uid="uid://dml2q7hh4hujg" path="res://Source/icon_pngs/Textiles_B.png" id="41_vwnyu"]
 
 [node name="Strategy_UI" type="Control"]
 layout_mode = 3
@@ -318,7 +311,7 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="Resource Info/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="FoodAmount" type="Label" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer"]
+[node name="Food" type="Label" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 
 [node name="Food Picture" type="TextureRect" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer"]
@@ -351,89 +344,12 @@ expand_mode = 3
 [node name="HBoxContainer4" type="HBoxContainer" parent="Resource Info/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Plank" type="Label" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer4"]
+[node name="Stone" type="Label" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer4"]
 layout_mode = 2
 
-[node name="Plank Picture" type="TextureRect" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer4"]
-layout_mode = 2
-texture = ExtResource("34_7keml")
-expand_mode = 3
-
-[node name="HBoxContainer5" type="HBoxContainer" parent="Resource Info/MarginContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Stone" type="Label" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer5"]
-layout_mode = 2
-
-[node name="Stone Picture" type="TextureRect" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer5"]
+[node name="Stone Picture" type="TextureRect" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer4"]
 layout_mode = 2
 texture = ExtResource("35_or83b")
-expand_mode = 3
-
-[node name="HBoxContainer6" type="HBoxContainer" parent="Resource Info/MarginContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Stone Brick" type="Label" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer6"]
-layout_mode = 2
-
-[node name="Stone Brick Picture" type="TextureRect" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer6"]
-layout_mode = 2
-texture = ExtResource("36_1qn0f")
-expand_mode = 3
-
-[node name="HBoxContainer7" type="HBoxContainer" parent="Resource Info/MarginContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Iron" type="Label" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer7"]
-layout_mode = 2
-
-[node name="Iron Picture" type="TextureRect" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer7"]
-layout_mode = 2
-texture = ExtResource("37_ocmyg")
-expand_mode = 3
-
-[node name="HBoxContainer8" type="HBoxContainer" parent="Resource Info/MarginContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Iron Bar" type="Label" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer8"]
-layout_mode = 2
-
-[node name="Iron Bar Picture" type="TextureRect" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer8"]
-layout_mode = 2
-texture = ExtResource("38_0k2gm")
-expand_mode = 3
-
-[node name="HBoxContainer9" type="HBoxContainer" parent="Resource Info/MarginContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Gold" type="Label" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer9"]
-layout_mode = 2
-
-[node name="Gold Picture" type="TextureRect" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer9"]
-layout_mode = 2
-texture = ExtResource("39_l5pvp")
-expand_mode = 3
-
-[node name="HBoxContainer10" type="HBoxContainer" parent="Resource Info/MarginContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Gold Bar" type="Label" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer10"]
-layout_mode = 2
-
-[node name="Gold Bar Picture" type="TextureRect" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer10"]
-layout_mode = 2
-texture = ExtResource("40_vrogo")
-expand_mode = 3
-
-[node name="HBoxContainer11" type="HBoxContainer" parent="Resource Info/MarginContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Leather" type="Label" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer11"]
-layout_mode = 2
-
-[node name="Leather Picture" type="TextureRect" parent="Resource Info/MarginContainer/HBoxContainer/HBoxContainer11"]
-layout_mode = 2
-texture = ExtResource("41_vwnyu")
 expand_mode = 3
 
 [connection signal="pressed" from="Main_Menu/MarginContainer/VBoxContainer/Play Game" to="Main_Menu" method="_on_play_game_pressed"]

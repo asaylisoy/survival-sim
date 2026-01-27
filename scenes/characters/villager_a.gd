@@ -14,6 +14,17 @@ var is_sleepy = false
 
 var chosen = false
 
+
+
+# --- STATE MACHINE ---
+enum State { IDLE, MOVING, GATHERING }
+var villager_state = State.IDLE
+
+# --- GATHERING VARIABLES ---
+var gather_timer: float = 0.0
+
+
+
 @onready var highlight_mat = preload("res://scenes/buildings/highlight.tres")
 
 @onready var world = $"../.."
@@ -21,7 +32,7 @@ var chosen = false
 var current_path: Array[Vector2i]
 var current_target_world_pos: Vector3
 
-var current_resource: Node = null
+var current_resource: ResourceNode = null
 
 @onready var rig_medium = $"Rig_Medium"
 @onready var arm_left = $"Rig_Medium/Skeleton3D/Mannequin_ArmLeft"
@@ -100,19 +111,39 @@ func _physics_process(delta: float) -> void:
 		animation_tree.set("parameters/Villager_A/conditions/is_dead", true)
 		alive = false
 		resource_info.set_villager_count(resource_info.get_villager_count() - 1)
-	else:
-		#if there is no target position to walk towards
-		#there is nothing to do just return
-		if current_path.is_empty() and current_target_world_pos == Vector3.ZERO:
-			velocity = Vector3.ZERO
-			return
-			
-		#if the goal is reached pick up a new target
+		return
+		
+	if alive:
+		match villager_state:
+			State.IDLE: 
+				velocity = Vector3.ZERO
+			State.MOVING:
+				process_movement()#Call the function managing moving
+			State.GATHERING:
+				process_gathering(delta)#Call the function managing gathering
+		move_and_slide()
+
+
+func process_movement():
+	#if the goal is reached pick up a new target
 		if global_position.distance_to(current_target_world_pos) < 0.2 or current_target_world_pos == Vector3.ZERO:
 			#check if the list is empty
 			if current_path.is_empty():
 				velocity = Vector3.ZERO
 				current_target_world_pos = Vector3.ZERO
+				
+				#Are there resources available at the target location?
+				if current_resource != null and is_instance_valid(current_resource):
+					villager_state = State.GATHERING#Switch to gathering state
+					
+					#Navigate direction to the source
+					var look_pos = current_resource.global_position
+					look_pos.y = global_position.y
+					look_at(look_pos, Vector3.UP)
+					
+				else:
+					villager_state = State.IDLE
+				
 				return
 			
 			#if the list is not empty set up a new goal
@@ -131,35 +162,27 @@ func _physics_process(delta: float) -> void:
 			look_at(look_target, Vector3.UP)
 			
 			velocity = direction * speed
-			move_and_slide()
-		
-		
-		
-		
-		
-		"""if current_path.is_empty():
-			pass
-		else:
-			var target_pos = current_path[0]	
-			velocity = global_position.direction_to(target_pos) * speed
-			
-			 # Wenn wir den Punkt fast erreicht haben, lösche ihn aus der Liste
-			if global_position.distance_to(target_pos) < 5:
-				current_path.remove_at(0)
-				if current_path.is_empty():
-					velocity = Vector3.ZERO
-			move_and_slide()"""
+
+
+func process_gathering(delta: float):
+	#If there is no source stay still
+	if current_resource == null or not is_instance_valid(current_resource):
+		villager_state = State.IDLE
+		current_resource = null
+		return
 	
-'''
-func move_to(direction, delta):
-	velocity = Vector3.ZERO
-	nav_agent.set_target_position(job_location)
-	var next_nav_point = nav_agent.get_next_path_position()
-	velocity = (next_nav_point - global_transform.origin.normalized() * speed)
-  # warning-ignore:return_value_discarded
-	move_and_collide(direction * delta * 100)
-'''	
-	
+	#Timer (Perform an action in 1 second)
+	gather_timer += delta
+	if gather_timer > 1.0: #Wait a second
+		gather_timer = 0.0
+		
+		#Remove 10 units from the source
+		var gathered_amount = current_resource.harvest(10)
+		
+		#Add to inventory
+		GameManager.add_resource(current_resource.resource_type, gathered_amount)
+
+
 func move_to_hex(target_hex: Vector2i):
 	
 	var current_hex = world.world_to_hex(global_position)
@@ -169,12 +192,17 @@ func move_to_hex(target_hex: Vector2i):
 	if new_path.size() > 0:
 		current_path = new_path
 		current_path.pop_front()
-		
 		current_target_world_pos = Vector3.ZERO
+		
+		villager_state = State.MOVING
 	else:
 		print("No path!")
 
-func set_target_resource(resource):
+"""func set_target_resource(resource):
+	if not (resource is ResourceNode):
+		print("ERROR: This is not a resource! Clicked is: ", resource)
+		return
+	
 	var position = world.world_to_hex(resource.global_position)
 	var target_hex = find_best_neighbor_hex(position)
 	
@@ -182,7 +210,25 @@ func set_target_resource(resource):
 		current_resource = resource
 		move_to_hex(target_hex)
 	else:
+		print("Resource is not reachable")"""
+
+
+func set_target_resource(target_node):
+	#Check if the target node is a resource or something else like a building
+	if target_node is ResourceNode:
+		current_resource = target_node
+	else:
+		current_resource = null
+	
+	var position = world.world_to_hex(target_node.global_position)
+	var target_hex = find_best_neighbor_hex(position)
+	
+	if target_hex != Vector2i.ZERO:
+		move_to_hex(target_hex)
+	else:
 		print("Resource is not reachable")
+
+
 
 #helper function for determining the closest neighboring hex
 #for the function set_target_resource
@@ -368,14 +414,18 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 			var collider = ray_result.collider
 			if collider is ResourceNode:
+				print("Resource clicked: ", collider)
 				set_target_resource(collider)
 			else:
+				print("Hex/Building clicked, moving...")
 				
 				#position is the exact Vector3 point where the ray hit the ground
 				var hit_position = ray_result.position
 				
-				#converts the 3D world position to our hex grid coordinates (q, r)
-				var target_hex = world.world_to_hex(hit_position)
+				if world:
 				
-				#send the movement command to the villager
-				move_to_hex(target_hex)
+					#converts the 3D world position to our hex grid coordinates (q, r)
+					var target_hex = world.world_to_hex(hit_position)
+				
+					#send the movement command to the villager
+					move_to_hex(target_hex)

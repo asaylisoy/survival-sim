@@ -1,28 +1,18 @@
-extends Node
+class_name ResourceNode extends StaticBody3D
 
-class_name ResourceNode
+@export var resource_type: String = "WOOD"#for stones do "STONES" in inspector
+@export var amount: int = 50
 
-enum resource_type {
-	WOOD,
-	STONE
-}
-var amount
-
-func harvest(damage: int):
-	amount -= damage
+func harvest(request_amount: int) -> int:
+	var given_amount = 0
+	
+	if amount >= request_amount:
+		given_amount = request_amount
+		amount -= request_amount
+	else:
+		given_amount = amount
+		amount = 0
 	if amount <= 0:
 		queue_free()
-
-
-
-
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	
+	return given_amount

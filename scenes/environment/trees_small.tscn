@@ -7,13 +7,11 @@
 height = 1.01857
 radius = 0.6635742
 
-[node name="trees_small" type="Node3D"]
+[node name="trees_small" type="StaticBody3D"]
 script = ExtResource("1_c3gsv")
 
 [node name="trees_A_small2" parent="." instance=ExtResource("1_m6u1c")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49071503, 0)
 shape = SubResource("CylinderShape3D_c3gsv")
