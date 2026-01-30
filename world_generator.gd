@@ -224,7 +224,7 @@ func _ready():
 	noise.seed = randi()
 	decoration_noise.seed = randi()
 	
-	noise.frequency = 0.01
+	noise.frequency = 0.005
 	decoration_noise.frequency = 0.2
 	
 	generate_world_data()

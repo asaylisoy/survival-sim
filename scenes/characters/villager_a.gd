@@ -7,7 +7,7 @@ var rest = 100 #shows the rested state of the villager. goes from 0 to 100
 var live = 100  #shows the livepoints of a villager. goes from 0 to 100
 var happyness = 100 #shows the happyness of a villager. goes from 0 to 100
 var hunger = 100 #shows the food saturation of the villager. goes from 0 to 100
-var speed: float = 2.0
+var speed: float = 3.0
 var alive = true
 var is_hungry = false
 var is_sleepy = false
@@ -49,6 +49,7 @@ var current_resource: ResourceNode = null
 @onready var right_hand = $"Rig_Medium/Skeleton3D/Right Hand"
 
 @onready var animation_tree : AnimationTree = $AnimationTree
+@onready var animation_player = $AnimationPlayer
 #@onready var nav_agent = $NavigationAgent3D
 
 @onready var villager_info = $"Villager Info"
@@ -62,7 +63,7 @@ var current_resource: ResourceNode = null
 
 
 func _ready() -> void:
-	animation_tree.active = true
+	#animation_tree.active = true
 	villager_info.visible = false
 
 	var agent = GoapAgent.new()
@@ -109,6 +110,7 @@ func _physics_process(delta: float) -> void:
 	if(live <= 0 && alive):
 		reset_all_animation_conditions()
 		animation_tree.set("parameters/Villager_A/conditions/is_dead", true)
+		play_anim("Villeger/Death_A")
 		alive = false
 		resource_info.set_villager_count(resource_info.get_villager_count() - 1)
 		return
@@ -117,10 +119,13 @@ func _physics_process(delta: float) -> void:
 		match villager_state:
 			State.IDLE: 
 				velocity = Vector3.ZERO
+				play_anim("Villeger/Idle_B")
 			State.MOVING:
 				process_movement()#Call the function managing moving
+				play_anim("Villeger/Walking_A")
 			State.GATHERING:
 				process_gathering(delta)#Call the function managing gathering
+				play_anim("Villeger/Melee_Unarmed_Attack_Punch_A")
 		move_and_slide()
 
 
@@ -429,3 +434,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				
 					#send the movement command to the villager
 					move_to_hex(target_hex)
+
+#This function prevents the animation from constantly restarting
+#If walking already, do not give command "walk"
+func play_anim(anim_name: String):
+	if animation_player.current_animation != anim_name:
+		animation_player.play(anim_name)
