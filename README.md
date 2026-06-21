@@ -8,7 +8,7 @@ To play the game on your local machine, navigate to the **Releases** section on 
 Once downloaded, extract the `.zip` archive into a folder and double-click the `.exe` file to launch the application.
 
 ## My Role and Contributions
-This heavily technically oriented game was developed collaboratively by a team of two.. As part of the development team, my primary focus was on the underlying systems and algorithms rather than level design. My key responsibilities included:
+This heavily technically oriented game was developed collaboratively by a team of two. As part of the development team, my primary focus was on the underlying systems and algorithms rather than level design. My key responsibilities included:
 * **Procedural Content Generation (PCG):** Designed and implemented the systems for procedural map generation to create dynamic environments.
 * **Pathfinding Integration:** Implemented the A* (A-Star) pathfinding algorithm to ensure accurate and intelligent navigation for entities within the 3D space.
 * Structuring the core simulation mechanics and supporting the overall technical architecture of the game.
