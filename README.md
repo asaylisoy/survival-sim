@@ -1,6 +1,6 @@
 # Survival Sim
 
-This project is a 3D simulation game developed as part of the **Fachprojekt** course during my university studies. 
+This project is a 3D simulation game developed as part of my university studies. 
 
 ## How to Play (Download)
 To play the game on your local machine, navigate to the **Releases** section on the right side of this repository.  
