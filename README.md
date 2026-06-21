@@ -3,7 +3,7 @@
 This project is a 3D simulation game developed as part of the **Fachprojekt** course during my university studies. 
 
 ## How to Play (Download)
-To play the simulation on your local machine, navigate to the **Releases** section on the right side of this repository.  
+To play the game on your local machine, navigate to the **Releases** section on the right side of this repository.  
 
 Once downloaded, extract the `.zip` archive into a folder and double-click the `.exe` file to launch the application.
 
